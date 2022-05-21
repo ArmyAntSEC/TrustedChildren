@@ -2,10 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "sam-app"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-5jvsdzkhonv5"
-s3_prefix = "sam-app"
+stack_name = "sam-trusted-children"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-14n03t9zqny4u"
+s3_prefix = "sam-trusted-children"
 region = "eu-west-1"
-confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
-image_repositories = ["HelloWorldFunction=083961261233.dkr.ecr.eu-west-1.amazonaws.com/samapp7427b055/helloworldfunction19d43fc4repo"]
+image_repositories = []

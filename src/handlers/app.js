@@ -14,12 +14,12 @@ let response;
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-exports.lambdaHandler2 = async (event, context) => {
-    try {        
+exports.lambdaHandler = async (event, context) => {
+    try {
         response = {
             'statusCode': 200,
             'body': JSON.stringify({
-                message: 'hello world',         
+                message: 'hello world',
             })
         }
     } catch (err) {
