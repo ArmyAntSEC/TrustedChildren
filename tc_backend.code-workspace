@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {},
+	"launch": {
+		"configurations": [
+			{
+				"type": "aws-sam",
+				"request": "direct-invoke",
+				"name": "temp_2:HelloWorldFunction",
+				"invokeTarget": {
+					"target": "template",
+					"templatePath": "/Users/danielarmyr/Documents/code/temp_2/template.yaml",
+					"logicalId": "HelloWorldFunction"
+				},
+				"lambda": {
+					"payload": {},
+					"environmentVariables": {},
+					"runtime": "nodejs14.x"
+				}
+			},
+			{
+				"type": "aws-sam",
+				"request": "direct-invoke",
+				"name": "API temp_2:HelloWorldFunction",
+				"invokeTarget": {
+					"target": "api",
+					"templatePath": "/Users/danielarmyr/Documents/code/temp_2/template.yaml",
+					"logicalId": "HelloWorldFunction"
+				},
+				"api": {
+					"path": "/hello",
+					"httpMethod": "get",
+					"payload": {
+						"json": {}
+					}
+				},
+				"lambda": {
+					"runtime": "nodejs14.x"
+				}
+			}
+		]
+	}
+}
