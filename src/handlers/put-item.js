@@ -10,14 +10,13 @@ exports.putItemHandler = async (event) => {
     console.info('received:', event);
 
     const body = JSON.parse(event.body);
-    const id = body.recipientID;
-    const name = body.name;
+    const recipientID = body.recipientID;
+    const senderID = body.senderID;
+    const data = body.data;
 
-    // Creates a new item, or replaces an old item with a new item
-    // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property
     var params = {
         TableName: tableName,
-        Item: { recipientID: id, name: name }
+        Item: { recipientID: recipientID, senderID: senderID, data: data }
     };
 
     const result = await docClient.put(params).promise();
@@ -27,7 +26,6 @@ exports.putItemHandler = async (event) => {
         body: JSON.stringify(body)
     };
 
-    // All log statements are written to CloudWatch
     console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
     return response;
 };

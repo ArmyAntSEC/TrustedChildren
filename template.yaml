@@ -59,7 +59,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /{id}
+            Path: /{recipientID}
             Method: GET
 
   putItemFunction:
@@ -85,8 +85,16 @@ Resources:
             #   ApiKeyRequired: true
 
   SampleTable:
-    Type: AWS::Serverless::SimpleTable
+    Type: AWS::DynamoDB::Table
     Properties:
-      PrimaryKey:
-        Name: recipientID
-        Type: String
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: recipientID
+          AttributeType: S
+        - AttributeName: senderID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: recipientID
+          KeyType: HASH
+        - AttributeName: senderID
+          KeyType: RANGE
