@@ -26,7 +26,7 @@ Resources:
   helloWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/app.lambdaHandler
+      Handler: src/handlers/helloWorld.helloWorld
       Runtime: nodejs14.x
       Architectures:
         - x86_64
@@ -143,11 +143,8 @@ Resources:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
-        Name: id
+        Name: recipientID
         Type: String
-      ProvisionedThroughput:
-        ReadCapacityUnits: 2
-        WriteCapacityUnits: 2
 
 Outputs:
   WebEndpoint:
