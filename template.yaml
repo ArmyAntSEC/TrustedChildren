@@ -39,6 +39,9 @@ Resources:
           Properties:
             Path: /hello
             Method: GET
+  #            Auth:
+  #              ApiKeyRequired: true
+
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
@@ -67,6 +70,9 @@ Resources:
           Properties:
             Path: /
             Method: GET
+  #            Auth:
+  #              ApiKeyRequired: true
+
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
@@ -95,6 +101,9 @@ Resources:
           Properties:
             Path: /{id}
             Method: GET
+            # Auth:
+            #   ApiKeyRequired: true
+
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
@@ -123,6 +132,9 @@ Resources:
           Properties:
             Path: /
             Method: POST
+            # Auth:
+            #   ApiKeyRequired: true
+
   # Simple syntax to create a DynamoDB table with a single attribute primary key, more in
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlesssimpletable
 
