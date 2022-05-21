@@ -81,6 +81,8 @@ Resources:
           Properties:
             Path: /
             Method: POST
+            # Auth:
+            #   ApiKeyRequired: true
 
   SampleTable:
     Type: AWS::Serverless::SimpleTable
