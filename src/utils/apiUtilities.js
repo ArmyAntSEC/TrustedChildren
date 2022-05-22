@@ -11,8 +11,9 @@ exports.verifyProperMethod = function (event, method) {
 exports.handlerWrapper = async function (event, handler) {
 
     console.info('received:', event);
-    verifyStandardKey(event);
     try {
+        verifyStandardKey(event);
+
         const data = await handler(event);
         if (data === null || data === undefined) {
             return response(204, "");
@@ -21,7 +22,9 @@ exports.handlerWrapper = async function (event, handler) {
         }
     } catch (exception) {
         if (exception instanceof ErrorResponse) {
-            return response(exception.statusCode, exception.body)
+            const rValue = response(exception.statusCode, exception.body)
+            console.info(rValue)
+            return rValue;
         } else {
             return response(500, "Internal Server Error")
         }

@@ -67,6 +67,16 @@ describe('Test verifyProperMethod', function () {
             expect(response.body).toEqual("Internal Server Error");
         });
 
+        it('should respond properly on bad API Key', async () => {
+            process.env.HASHED_API_KEY = "Bad key";
+            const handler = function (event) { throw new Error("Error") }
+            const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
+
+            const response = await apiUtils.handlerWrapper(event, handler);
+
+            expect(response.statusCode).toEqual(403);
+            expect(response.body).toEqual("Forbidden");
+        });
     })
 
 })

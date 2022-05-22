@@ -22,10 +22,5 @@ async function doGetByRecipientID(event) {
     }
   };
 
-  console.info('params:', params);
-
-  const data = await docClient.query(params).promise();
-  console.info('data:', data);
-
-  return data;
+  return await docClient.query(params).promise();
 }
