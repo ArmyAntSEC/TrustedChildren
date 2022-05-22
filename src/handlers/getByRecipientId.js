@@ -1,4 +1,4 @@
-const verifyApiKey = require('../utils/verifyAPIKey.js');
+const verifyApiKey = require('../utils/apiUtilities.js');
 
 const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
@@ -13,9 +13,6 @@ exports.getByRecipientIdHandler = async (event) => {
   let response;
 
   try {
-    if (event.httpMethod !== 'GET') {
-      throw new Error(`getMethod only accept GET method, you tried: ${event.httpMethod}`);
-    }
     console.info('received:', event);
 
     if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
@@ -29,9 +26,8 @@ exports.getByRecipientIdHandler = async (event) => {
       body: JSON.stringify(data)
     };
 
-
   } catch (exception) {
-    const response = {
+    response = {
       statusCode: 400,
       body: { errorMessage: exception }
     };
@@ -43,6 +39,7 @@ exports.getByRecipientIdHandler = async (event) => {
 };
 
 async function doGetByRecipientID(event) {
+
 
   const recipientID = event.pathParameters.recipientID;
 

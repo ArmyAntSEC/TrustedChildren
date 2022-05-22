@@ -1,4 +1,4 @@
-const verifyApiKey = require('../utils/verifyAPIKey.js');
+const verifyApiKey = require('../utils/apiUtilities.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
 

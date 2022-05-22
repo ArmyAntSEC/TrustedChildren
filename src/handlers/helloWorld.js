@@ -1,4 +1,4 @@
-const verifyApiKey = require('../utils/verifyAPIKey.js');
+const verifyApiKey = require('../utils/apiUtilities.js');
 
 exports.helloWorld = async (event, context) => {
     if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
