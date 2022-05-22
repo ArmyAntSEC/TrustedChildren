@@ -10,28 +10,22 @@ function doHandleGetByRecipientID(event) {
 }
 
 exports.getByRecipientIdHandler = async (event) => {
-  let response;
 
   try {
 
-    data = await wrapper(event, doGetByRecipientID);
-
-    response = {
-      statusCode: 200,
-      body: JSON.stringify(data)
-    };
-
+    return await wrapper(event, doGetByRecipientID);
   } catch (exception) {
     if (exception instanceof apiUtilities.ErrorResponse) {
-      response = {
+      return {
         statusCode: exception.statusCode,
         body: exception.body
-      }
+      };
+    } else {
+      return {
+        statusCode: 500,
+        body: "Unexpected error"
+      };
     }
-  } finally {
-    // All log statements are written to CloudWatch
-    console.info("Response:", response);
-    return response;
   }
 };
 
@@ -40,7 +34,12 @@ async function wrapper(event, handler) {
   console.info('received:', event);
   apiUtilities.verifyStandardKey(event);
   try {
-    return handler(event);
+    const data = await handler(event);
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify(data)
+    };
+    return response;
   } catch (exception) {
 
   }
