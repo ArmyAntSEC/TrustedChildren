@@ -3,7 +3,7 @@ const tableName = process.env.SAMPLE_TABLE;
 const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
 
-exports.getByIdHandler = async (event) => {
+exports.getByRecipientIdHandler = async (event) => {
   if (event.httpMethod !== 'GET') {
     throw new Error(`getMethod only accept GET method, you tried: ${event.httpMethod}`);
   }
@@ -13,7 +13,6 @@ exports.getByIdHandler = async (event) => {
 
   var params = {
     TableName: tableName,
-
     KeyConditionExpression: 'recipientID = :recipientID',
     ExpressionAttributeValues: {
       ':recipientID': recipientID

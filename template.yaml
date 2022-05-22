@@ -44,10 +44,10 @@ Resources:
             Path: /
             Method: GET
 
-  getByIdFunction:
+  getByREcipientIdFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-by-id.getByIdHandler
+      Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
       Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
