@@ -5,15 +5,44 @@ const docClient = new dynamodb.DocumentClient();
 
 const tableName = process.env.SAMPLE_TABLE;
 
-exports.getByRecipientIdHandler = async (event) => {
-  if (event.httpMethod !== 'GET') {
-    throw new Error(`getMethod only accept GET method, you tried: ${event.httpMethod}`);
-  }
-  console.info('received:', event);
+function doHandleGetByRecipientID(event) {
 
-  if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
-    throw new Error("Invalid API Key provided");
+}
+
+exports.getByRecipientIdHandler = async (event) => {
+  let response;
+
+  try {
+    if (event.httpMethod !== 'GET') {
+      throw new Error(`getMethod only accept GET method, you tried: ${event.httpMethod}`);
+    }
+    console.info('received:', event);
+
+    if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
+      throw new Error("Invalid API Key provided");
+    }
+
+    data = await doGetByRecipientID(event);
+
+    response = {
+      statusCode: 200,
+      body: JSON.stringify(data)
+    };
+
+
+  } catch (exception) {
+    const response = {
+      statusCode: 400,
+      body: { errorMessage: exception }
+    };
+  } finally {
+    // All log statements are written to CloudWatch
+    console.info("Response:", response);
+    return response;
   }
+};
+
+async function doGetByRecipientID(event) {
 
   const recipientID = event.pathParameters.recipientID;
 
@@ -30,12 +59,5 @@ exports.getByRecipientIdHandler = async (event) => {
   const data = await docClient.query(params).promise();
   console.info('data:', data);
 
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify(data)
-  };
-
-  // All log statements are written to CloudWatch
-  console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
-  return response;
+  return data;
 }

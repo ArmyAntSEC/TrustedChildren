@@ -3,6 +3,21 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "TrustedChildrenBackend:src/handlers/getByRecipientId.getByRecipientIdHandler (nodejs14.x)",
+            "invokeTarget": {
+                "target": "code",
+                "projectRoot": "${workspaceFolder}/",
+                "lambdaHandler": "src/handlers/getByRecipientId.getByRecipientIdHandler"
+            },
+            "lambda": {
+                "runtime": "nodejs14.x",
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "API sam_test:HelloWorldFunction (nodejs14.x)",
             "invokeTarget": {
                 "target": "api",
