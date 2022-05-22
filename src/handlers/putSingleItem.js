@@ -11,7 +11,7 @@ exports.putSingleItemHandler = async (event) => {
     }
     console.info('received:', event);
 
-    if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
+    if (!verifyApiKey.verifyStandardKey(event)) {
         throw new Error("Invalid API Key provided");
     }
 

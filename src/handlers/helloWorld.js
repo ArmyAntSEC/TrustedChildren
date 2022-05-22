@@ -1,7 +1,7 @@
 const verifyApiKey = require('../utils/apiUtilities.js');
 
 exports.helloWorld = async (event, context) => {
-    if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
+    if (!verifyApiKey.verifyStandardKey(event)) {
         throw new Error("Invalid API Key provided");
     }
 

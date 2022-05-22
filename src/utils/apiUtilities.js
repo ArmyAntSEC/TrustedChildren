@@ -1,8 +1,9 @@
 const crypto = require('node:crypto');
 
-function verifyStandardKey(apiKey) {
+exports.verifyStandardKey = function (event) {
+    const apiKey = event.headers['x-api-key']
     const hashedApiKey = process.env.HASHED_API_KEY;
-    let hash = hashKey(apiKey);
+    const hash = hashKey(apiKey);
     return hash === hashedApiKey;
 }
 
@@ -14,23 +15,19 @@ function hashKey(apiKey) {
     return hash;
 };
 
-exports.verifyStandardKey = verifyStandardKey;
-
 exports.ErrorResponse = class extends Error {
-    responseCode;
+    statusCode;
     body;
 
-    constructor(responseCode, body) {
-        super("Response: " + responseCode + " Body: " + body);
-        this.responseCode = responseCode;
+    constructor(statusCode, body) {
+        super("Response: " + statusCode + " Body: " + body);
+        this.statusCode = statusCode;
         this.body = body;
     }
 }
 
-function verifyProperMethod(event, method) {
+exports.verifyProperMethod = function (event, method) {
     if (event.httpMethod !== method) {
         throw new exports.ErrorResponse(405, "Method not allowed");
     }
 }
-
-exports.verifyProperMethod = verifyProperMethod;

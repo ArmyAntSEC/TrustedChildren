@@ -1,4 +1,4 @@
-const verifyApiKey = require('../utils/apiUtilities.js');
+const apiUtilities = require('../utils/apiUtilities.js');
 
 const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
@@ -15,9 +15,7 @@ exports.getByRecipientIdHandler = async (event) => {
   try {
     console.info('received:', event);
 
-    if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
-      throw new Error("Invalid API Key provided");
-    }
+    apiUtilities.verifyStandardKey(event);
 
     data = await doGetByRecipientID(event);
 
@@ -27,10 +25,12 @@ exports.getByRecipientIdHandler = async (event) => {
     };
 
   } catch (exception) {
-    response = {
-      statusCode: 400,
-      body: { errorMessage: exception }
-    };
+    if (exception instanceof apiUtilities.ErrorResponse) {
+      response = {
+        statusCode: exception.statusCode,
+        body: exception.body
+      }
+    }
   } finally {
     // All log statements are written to CloudWatch
     console.info("Response:", response);
@@ -39,10 +39,9 @@ exports.getByRecipientIdHandler = async (event) => {
 };
 
 async function doGetByRecipientID(event) {
-
+  apiUtilities.verifyProperMethod(event, "GET");
 
   const recipientID = event.pathParameters.recipientID;
-
   var params = {
     TableName: tableName,
     KeyConditionExpression: 'recipientID = :recipientID',
