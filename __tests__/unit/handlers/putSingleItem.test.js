@@ -31,8 +31,8 @@ describe('Test putSingleItemHandler', function () {
 
         const result = await lambda.putSingleItemHandler(event);
         const expectedResult = {
-            statusCode: 200,
-            body: JSON.stringify(returnedItem)
+            statusCode: 204,
+            body: ""
         };
 
         // Compare the result with the expected result 

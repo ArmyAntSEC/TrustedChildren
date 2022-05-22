@@ -1,20 +1,9 @@
 const apiUtils = require('./apiKeyHandling.js');
-
-class ErrorResponse extends Error {
-    statusCode;
-    body;
-
-    constructor(statusCode, body) {
-        super("Response: " + statusCode + " Body: " + body);
-        this.statusCode = statusCode;
-        this.body = body;
-    }
-}
-exports.ErrorResponse = ErrorResponse;
+const ErrorResponse = require('./ErrorResponse.js').ErrorResponse;
 
 exports.verifyProperMethod = function (event, method) {
     if (event.httpMethod !== method) {
-        throw new exports.ErrorResponse(405, "Method not allowed");
+        throw new ErrorResponse(405, "Method not allowed");
     }
 }
 
@@ -25,7 +14,7 @@ exports.handlerWrapper = async function (event, handler) {
     verifyStandardKey(event);
     try {
         const data = await handler(event);
-        if (data === null) {
+        if (data === null || data === undefined) {
             return response(204, "");
         } else {
             return response(200, JSON.stringify(data))

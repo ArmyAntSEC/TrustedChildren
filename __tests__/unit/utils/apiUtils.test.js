@@ -1,4 +1,5 @@
 const apiUtils = require('../../../src/utils/apiUtilities.js');
+const ErrorResponse = require('../../../src/utils/ErrorResponse.js').ErrorResponse;
 
 
 describe('Test verifyProperMethod', function () {
@@ -18,11 +19,11 @@ describe('Test verifyProperMethod', function () {
             apiUtils.verifyProperMethod(event, method)
         }
 
-        expect(verifyError).toThrow(new apiUtils.ErrorResponse(405, "Method not allowed"))
+        expect(verifyError).toThrow(new ErrorResponse(405, "Method not allowed"))
     });
 
     describe('Test handlerWrapper', function () {
-        it('should responsProperly On Success', async () => {
+        it('should respond properly on success', async () => {
             process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
             const handler = function (event) { return { "key": "value" } }
             const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
@@ -33,7 +34,7 @@ describe('Test verifyProperMethod', function () {
             expect(response.body).toEqual(JSON.stringify({ "key": "value" }));
         });
 
-        it('should responsProperly On Empty Data', async () => {
+        it('should respond properly on empty data', async () => {
             process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
             const handler = function (event) { return null }
             const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
@@ -44,9 +45,9 @@ describe('Test verifyProperMethod', function () {
             expect(response.body).toEqual("");
         });
 
-        it('should responsProperly On Expected Failure', async () => {
+        it('should respond properly on expected failure', async () => {
             process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
-            const handler = function (event) { throw new apiUtils.ErrorResponse(404, "Error") }
+            const handler = function (event) { throw new ErrorResponse(404, "Error") }
             const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
 
             const response = await apiUtils.handlerWrapper(event, handler);
@@ -55,7 +56,7 @@ describe('Test verifyProperMethod', function () {
             expect(response.body).toEqual("Error");
         });
 
-        it('should responsProperly On Unxpected Failure', async () => {
+        it('should respond properly on unxpected failure', async () => {
             process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
             const handler = function (event) { throw new Error("Error") }
             const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
