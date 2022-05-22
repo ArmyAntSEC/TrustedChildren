@@ -26,6 +26,9 @@ describe('Test getByRecipientIdHandler', () => {
             httpMethod: 'GET',
             pathParameters: {
                 recipientID: 'id1'
+            },
+            headers: {
+                'x-api-key': "ABASDLKJASDLKSAKL"
             }
         }
 
