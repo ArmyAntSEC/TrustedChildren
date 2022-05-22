@@ -13,11 +13,8 @@ exports.getByRecipientIdHandler = async (event) => {
   let response;
 
   try {
-    console.info('received:', event);
 
-    apiUtilities.verifyStandardKey(event);
-
-    data = await doGetByRecipientID(event);
+    data = await wrapper(event, doGetByRecipientID);
 
     response = {
       statusCode: 200,
@@ -37,6 +34,17 @@ exports.getByRecipientIdHandler = async (event) => {
     return response;
   }
 };
+
+async function wrapper(event, handler) {
+
+  console.info('received:', event);
+  apiUtilities.verifyStandardKey(event);
+  try {
+    return handler(event);
+  } catch (exception) {
+
+  }
+}
 
 async function doGetByRecipientID(event) {
   apiUtilities.verifyProperMethod(event, "GET");
