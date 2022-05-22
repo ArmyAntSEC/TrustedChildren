@@ -1,21 +1,4 @@
-const crypto = require('node:crypto');
-const { syncBuiltinESMExports } = require('node:module');
-
-verifyStandardKey = function (event) {
-    const apiKey = event.headers['x-api-key']
-    const hashedApiKey = process.env.HASHED_API_KEY;
-    const hash = hashKey(apiKey);
-    return hash === hashedApiKey;
-}
-exports.verifyStandardKey = verifyStandardKey;
-
-function hashKey(apiKey) {
-    const hasher = crypto.createHash('sha256');
-    hasher.update(apiKey);
-    let hash = hasher.digest('hex');
-    console.log("Hashed API Key:", hash);
-    return hash;
-};
+const apiUtils = require('./apiKeyHandling.js');
 
 class ErrorResponse extends Error {
     statusCode;
@@ -35,6 +18,7 @@ exports.verifyProperMethod = function (event, method) {
     }
 }
 
+
 exports.handlerWrapper = async function (event, handler) {
 
     console.info('received:', event);
@@ -42,27 +26,22 @@ exports.handlerWrapper = async function (event, handler) {
     try {
         const data = await handler(event);
         if (data === null) {
-            return {
-                statusCode: 204,
-                body: ""
-            }
+            return response(204, "");
         } else {
-            return {
-                statusCode: 200,
-                body: JSON.stringify(data)
-            }
+            return response(200, JSON.stringify(data))
         }
     } catch (exception) {
         if (exception instanceof ErrorResponse) {
-            return {
-                statusCode: exception.statusCode,
-                body: exception.body
-            };
+            return response(exception.statusCode, exception.body)
         } else {
-            return {
-                statusCode: 500,
-                body: "Internal Server Error"
-            };
+            return response(500, "Internal Server Error")
         }
     }
+}
+
+function response(code, body) {
+    return {
+        statusCode: code,
+        body: body
+    };
 }
