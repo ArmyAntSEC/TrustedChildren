@@ -41,10 +41,17 @@ exports.handlerWrapper = async function (event, handler) {
     verifyStandardKey(event);
     try {
         const data = await handler(event);
-        return {
-            statusCode: 200,
-            body: JSON.stringify(data)
-        };
+        if (data === null) {
+            return {
+                statusCode: 204,
+                body: ""
+            }
+        } else {
+            return {
+                statusCode: 200,
+                body: JSON.stringify(data)
+            }
+        }
     } catch (exception) {
         if (exception instanceof ErrorResponse) {
             return {
