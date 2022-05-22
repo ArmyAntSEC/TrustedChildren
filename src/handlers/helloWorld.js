@@ -1,9 +1,7 @@
-const verifyApiKey = require('../utils/apiUtilities.js');
+const verifyStandardKey = require('../utils/apiKeyHandling.js').verifyStandardKey;
 
 exports.helloWorld = async (event, context) => {
-    if (!verifyApiKey.verifyStandardKey(event)) {
-        throw new Error("Invalid API Key provided");
-    }
+    verifyStandardKey(event);
 
     let response = {
         'statusCode': 200,

@@ -1,4 +1,5 @@
 const apiUtils = require('../../../src/utils/apiKeyHandling.js');
+const ErrorResponse = require('../../../src/utils/ErrorResponse.js').ErrorResponse;
 
 describe('Test verifyAPIKey', function () {
     it('should verify the standard API keys', async () => {
@@ -8,5 +9,14 @@ describe('Test verifyAPIKey', function () {
             apiUtils.verifyStandardKey(event);
         }
         expect(verify).not.toThrow();
+    });
+
+    it('should fail on the wrong standard API keys', async () => {
+        process.env.HASHED_API_KEY = "Wrong key";
+        const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
+        function verify() {
+            apiUtils.verifyStandardKey(event);
+        }
+        expect(verify).toThrow(new ErrorResponse(403, "Forbidden"));
     });
 })
