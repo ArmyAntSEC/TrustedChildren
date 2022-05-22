@@ -10,10 +10,19 @@ function doHandleGetByRecipientID(event) {
 }
 
 exports.getByRecipientIdHandler = async (event) => {
+  return await wrapper(event, doGetByRecipientID);
+};
 
+async function wrapper(event, handler) {
+
+  console.info('received:', event);
+  apiUtilities.verifyStandardKey(event);
   try {
-
-    return await wrapper(event, doGetByRecipientID);
+    const data = await handler(event);
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data)
+    };
   } catch (exception) {
     if (exception instanceof apiUtilities.ErrorResponse) {
       return {
@@ -23,25 +32,9 @@ exports.getByRecipientIdHandler = async (event) => {
     } else {
       return {
         statusCode: 500,
-        body: "Unexpected error"
+        body: "Internal Server Error"
       };
     }
-  }
-};
-
-async function wrapper(event, handler) {
-
-  console.info('received:', event);
-  apiUtilities.verifyStandardKey(event);
-  try {
-    const data = await handler(event);
-    const response = {
-      statusCode: 200,
-      body: JSON.stringify(data)
-    };
-    return response;
-  } catch (exception) {
-
   }
 }
 
