@@ -1,10 +1,10 @@
 // Import all functions from put-item.js 
-const lambda = require('../../../src/handlers/put-item.js');
+const lambda = require('../../../src/handlers/putSingleItem.js');
 // Import dynamodb from aws-sdk 
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
 // This includes all tests for putItemHandler() 
-describe('Test putItemHandler', function () {
+describe('Test putSingleItemHandler', function () {
     let putSpy;
 
     beforeAll(() => {
@@ -27,8 +27,7 @@ describe('Test putItemHandler', function () {
             body: '{"recipientID": "id1","senderID": "id2", "data": "data"}'
         };
 
-        // Invoke putItemHandler() 
-        const result = await lambda.putItemHandler(event);
+        const result = await lambda.putSingleItemHandler(event);
         const expectedResult = {
             statusCode: 200,
             body: JSON.stringify(returnedItem)

@@ -26,25 +26,7 @@ Resources:
             Path: /hello
             Method: GET
 
-  getAllItemsFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/get-all-items.getAllItemsHandler
-      Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
-      Environment:
-        Variables:
-          SAMPLE_TABLE: !Ref SampleTable
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /
-            Method: GET
-
-  getByREcipientIdFunction:
+  getByRecipientIdFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
@@ -62,10 +44,10 @@ Resources:
             Path: /{recipientID}
             Method: GET
 
-  putItemFunction:
+  putSingleItemFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/put-item.putItemHandler
+      Handler: src/handlers/putSingleItem.putSingleItemHandler
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
