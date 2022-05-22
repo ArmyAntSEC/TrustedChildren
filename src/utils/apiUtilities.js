@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const { syncBuiltinESMExports } = require('node:module');
 
 exports.verifyStandardKey = function (event) {
     const apiKey = event.headers['x-api-key']
@@ -29,5 +30,30 @@ exports.ErrorResponse = class extends Error {
 exports.verifyProperMethod = function (event, method) {
     if (event.httpMethod !== method) {
         throw new exports.ErrorResponse(405, "Method not allowed");
+    }
+}
+
+exports.handlerWrapper = async function (event, handler) {
+
+    console.info('received:', event);
+    exports.verifyStandardKey(event);
+    try {
+        const data = await handler(event);
+        return {
+            statusCode: 200,
+            body: JSON.stringify(data)
+        };
+    } catch (exception) {
+        if (exception instanceof apiUtilities.ErrorResponse) {
+            return {
+                statusCode: exception.statusCode,
+                body: exception.body
+            };
+        } else {
+            return {
+                statusCode: 500,
+                body: "Internal Server Error"
+            };
+        }
     }
 }
