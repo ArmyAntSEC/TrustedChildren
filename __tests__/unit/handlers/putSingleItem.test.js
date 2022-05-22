@@ -1,6 +1,5 @@
-// Import all functions from put-item.js 
+process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
 const lambda = require('../../../src/handlers/putSingleItem.js');
-// Import dynamodb from aws-sdk 
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
 // This includes all tests for putItemHandler() 
@@ -24,7 +23,10 @@ describe('Test putSingleItemHandler', function () {
 
         const event = {
             httpMethod: 'POST',
-            body: '{"recipientID": "id1","senderID": "id2", "data": "data"}'
+            body: '{"recipientID": "id1","senderID": "id2", "data": "data"}',
+            headers: {
+                'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
+            }
         };
 
         const result = await lambda.putSingleItemHandler(event);

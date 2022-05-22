@@ -12,6 +12,9 @@ Globals:
       - x86_64
     MemorySize: 128
     Timeout: 100
+    Environment:
+      Variables:
+        HASHED_API_KEY: "c8b51b731a62386fd89d9598fb3508c2ff396b91282a888fad66bc615a4771ba"
 
 Resources:
   helloWorldFunction:

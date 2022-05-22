@@ -1,16 +1,17 @@
 const crypto = require('node:crypto');
-
-const hasher = crypto.createHash('sha256');
+const hashedApiKey = process.env.HASHED_API_KEY;
 
 function hashKey(apiKey) {
+    const hasher = crypto.createHash('sha256');
     hasher.update(apiKey);
     let hash = hasher.digest('hex');
+    console.log("Hashed API Key:", hash);
     return hash;
 };
 
 function verifyStandardKey(apiKey) {
     let hash = hashKey(apiKey);
-    return hash === "c8b51b731a62386fd89d9598fb3508c2ff396b91282a888fad66bc615a4771ba";
+    return hash === hashedApiKey;
 }
 
 exports.hashKey = hashKey;

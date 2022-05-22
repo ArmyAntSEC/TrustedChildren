@@ -1,5 +1,7 @@
+const verifyApiKey = require('../utils/verifyAPIKey.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
+
 
 const tableName = process.env.SAMPLE_TABLE;
 
@@ -8,6 +10,10 @@ exports.putSingleItemHandler = async (event) => {
         throw new Error(`postMethod only accepts POST method, you tried: ${event.httpMethod} method.`);
     }
     console.info('received:', event);
+
+    if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
+        throw new Error("Invalid API Key provided");
+    }
 
     const body = JSON.parse(event.body);
     const recipientID = body.recipientID;

@@ -1,3 +1,4 @@
+process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
 const lambda = require('../../../src/handlers/getByRecipientId.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
@@ -28,7 +29,7 @@ describe('Test getByRecipientIdHandler', () => {
                 recipientID: 'id1'
             },
             headers: {
-                'x-api-key': "ABASDLKJASDLKSAKL"
+                'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
             }
         }
 

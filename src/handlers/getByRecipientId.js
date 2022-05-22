@@ -1,9 +1,9 @@
-const tableName = process.env.SAMPLE_TABLE;
-
-const dynamodb = require('aws-sdk/clients/dynamodb');
 const verifyApiKey = require('../utils/verifyAPIKey.js');
 
+const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
+
+const tableName = process.env.SAMPLE_TABLE;
 
 exports.getByRecipientIdHandler = async (event) => {
   if (event.httpMethod !== 'GET') {
@@ -11,9 +11,9 @@ exports.getByRecipientIdHandler = async (event) => {
   }
   console.info('received:', event);
 
-  // if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
-  //   throw new Error("Invalid API Key provided");
-  // }
+  if (!verifyApiKey.verifyStandardKey(event.headers['x-api-key'])) {
+    throw new Error("Invalid API Key provided");
+  }
 
   const recipientID = event.pathParameters.recipientID;
 
