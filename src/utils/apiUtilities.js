@@ -9,8 +9,6 @@ exports.verifyProperMethod = function (event, method) {
 
 
 exports.handlerWrapper = async function (event, handler) {
-
-    console.info('received:', event);
     try {
         verifyStandardKey(event);
 
@@ -23,7 +21,6 @@ exports.handlerWrapper = async function (event, handler) {
     } catch (exception) {
         if (exception instanceof ErrorResponse) {
             const rValue = response(exception.statusCode, exception.body)
-            console.info(rValue)
             return rValue;
         } else {
             return response(500, "Internal Server Error")
