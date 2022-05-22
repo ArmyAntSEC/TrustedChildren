@@ -1,12 +1,13 @@
 const crypto = require('node:crypto');
 const { syncBuiltinESMExports } = require('node:module');
 
-exports.verifyStandardKey = function (event) {
+verifyStandardKey = function (event) {
     const apiKey = event.headers['x-api-key']
     const hashedApiKey = process.env.HASHED_API_KEY;
     const hash = hashKey(apiKey);
     return hash === hashedApiKey;
 }
+exports.verifyStandardKey = verifyStandardKey;
 
 function hashKey(apiKey) {
     const hasher = crypto.createHash('sha256');
@@ -16,7 +17,7 @@ function hashKey(apiKey) {
     return hash;
 };
 
-exports.ErrorResponse = class extends Error {
+class ErrorResponse extends Error {
     statusCode;
     body;
 
@@ -26,6 +27,7 @@ exports.ErrorResponse = class extends Error {
         this.body = body;
     }
 }
+exports.ErrorResponse = ErrorResponse;
 
 exports.verifyProperMethod = function (event, method) {
     if (event.httpMethod !== method) {
@@ -36,7 +38,7 @@ exports.verifyProperMethod = function (event, method) {
 exports.handlerWrapper = async function (event, handler) {
 
     console.info('received:', event);
-    exports.verifyStandardKey(event);
+    verifyStandardKey(event);
     try {
         const data = await handler(event);
         return {
@@ -44,7 +46,7 @@ exports.handlerWrapper = async function (event, handler) {
             body: JSON.stringify(data)
         };
     } catch (exception) {
-        if (exception instanceof apiUtilities.ErrorResponse) {
+        if (exception instanceof ErrorResponse) {
             return {
                 statusCode: exception.statusCode,
                 body: exception.body
