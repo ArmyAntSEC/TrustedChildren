@@ -2,18 +2,19 @@ const { config } = require("aws-sdk");
 
 const axios = require("axios").default
 const myConfig = require("./config.json")
+const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/";
 
-describe('Test put two items and retrieve', () => {
+describe('Test roundtrip', () => {
 
     it('should put two items and then retrieve them', async () => {
         const recipientID = "TestRecipientID" + Math.floor(Math.random() * 1e8).toString();
         const senderID = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
         const data = "Test data " + Math.floor(Math.random() * 1e8).toString();
-        const senderID2 = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
+        const senderID2 = senderID + "ABD"; //Ensure that senderID is sorted before enderID2.
         const data2 = "Test data " + Math.floor(Math.random() * 1e8).toString();
 
         const request1 = {
-            url: "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/",
+            url: baseURL,
             method: "post",
             headers: { "x-api-key": myConfig.API_KEY },
             data: {
@@ -26,7 +27,7 @@ describe('Test put two items and retrieve', () => {
         expect(response1.status).toEqual(204);
 
         const request2 = {
-            url: "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/",
+            url: baseURL,
             method: "post",
             headers: { "x-api-key": myConfig.API_KEY },
             data: {
@@ -39,7 +40,7 @@ describe('Test put two items and retrieve', () => {
         expect(response2.status).toEqual(204);
 
         const request3 = {
-            url: "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/" + recipientID,
+            url: baseURL + recipientID,
             method: "get",
             headers: { "x-api-key": myConfig.API_KEY }
         }
@@ -54,4 +55,32 @@ describe('Test put two items and retrieve', () => {
         expect(response3.data.Items[1].data).toEqual(data2);
 
     });
+
+    it('should not put with wrong API key', async () => {
+        const request1 = {
+            url: baseURL,
+            method: "post",
+            headers: { "x-api-key": "Bad key" },
+            data: {
+                "recipientID": "Does",
+                "senderID": "Not",
+                "data": "matter"
+            },
+            validateStatus: () => true
+        }
+        const response1 = await axios(request1)
+        expect(response1.status).toEqual(403);
+
+    })
+
+    it('should not put with wrong API key', async () => {
+        const request = {
+            url: baseURL + "doesNotMatter",
+            method: "get",
+            headers: { "x-api-key": "Bad key" },
+            validateStatus: () => true
+        }
+        const response = await axios(request)
+        expect(response.status).toEqual(403);
+    })
 });

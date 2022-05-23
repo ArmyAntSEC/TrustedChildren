@@ -9,5 +9,6 @@ exports.helloWorld = async (event, context) => {
             message: 'hello world',
         })
     }
+
     return response
 };
