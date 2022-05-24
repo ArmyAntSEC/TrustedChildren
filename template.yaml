@@ -33,7 +33,6 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
-      Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref SampleTable
@@ -47,11 +46,10 @@ Resources:
             Path: /{recipientID}
             Method: GET
 
-  putSingleItemFunction:
+  putItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/putSingleItem.putSingleItemHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Handler: src/handlers/putItems.putItemsHandler
       Policies:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
