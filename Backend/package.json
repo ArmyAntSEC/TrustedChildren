@@ -10,7 +10,8 @@
         "yarn": "^1.22.18"
     },
     "devDependencies": {
-        "jest": "^28.1.0"
+        "jest": "^28.1.0",
+        "sonarqube-scanner": "^2.8.1"
     },
     "scripts": {
         "test": "jest"
