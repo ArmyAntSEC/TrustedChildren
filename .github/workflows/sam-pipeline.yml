@@ -6,7 +6,9 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
-      - run: npm test -- Backend/__tests__/unit/
+      - run: |
+        cd Backend 
+        npm test -- __tests__/unit/
         
   build-deploy:
     runs-on: ubuntu-latest
