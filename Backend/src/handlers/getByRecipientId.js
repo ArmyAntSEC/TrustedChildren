@@ -14,7 +14,7 @@ async function doGetByRecipientID(event) {
   apiUtilities.verifyProperMethod(event, "GET");
 
   const recipientID = event.pathParameters.recipientID;
-  var params = {
+  const params = {
     TableName: tableName,
     KeyConditionExpression: 'recipientID = :recipientID',
     ExpressionAttributeValues: {

@@ -19,7 +19,7 @@ async function doPutItems(event) {
         const recipientID = message.recipientID;
         const data = message.data;
 
-        var params = {
+        const params = {
             TableName: tableName,
             Item: { recipientID: recipientID, senderID: senderID, data: data }
         };
