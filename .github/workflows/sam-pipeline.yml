@@ -6,6 +6,7 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
+      - run: pwd
       - run: cd Backend && npm test -- __tests__/unit/
         
   build-deploy:
