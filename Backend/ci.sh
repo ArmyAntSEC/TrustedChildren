@@ -1,6 +1,6 @@
 #!/bin/sh
-npm test -- __tests__/unit/ && \
+yarn test -- __tests__/unit/ && \
 sam validate && \
 sam build && \
 sam deploy && \
-npm test -- __tests__/live/
+yarn test -- __tests__/live/
