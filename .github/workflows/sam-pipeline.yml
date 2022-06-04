@@ -3,11 +3,15 @@ on:
     branches:
       - master
 jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm test -- Backend/__tests__/unit/
+        
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v2      
       - uses: aws-actions/setup-sam@v1
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -17,7 +21,10 @@ jobs:
       # sam build       
       - run: sam build --use-container -t Backend/template.yaml
 
-# Run Unit tests- Specify unit tests here 
-
 # sam deploy
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-hello-world --s3-bucket sam-github-deployment --capabilities CAPABILITY_IAM --region eu-west-1
+
+  post-release-tests:
+      runs-on: ubuntu-latest
+      steps:
+        - run: npm test -- Backend/__tests__/live/
