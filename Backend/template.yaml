@@ -28,6 +28,12 @@ Resources:
           Properties:
             Path: /hello
             Method: GET
+  
+  HelloWorldFunctionLog:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref helloWorldFunction]]
+      RetentionInDays: 30
 
   getByRecipientIdFunction:
     Type: AWS::Serverless::Function
@@ -45,6 +51,12 @@ Resources:
           Properties:
             Path: /{recipientID}
             Method: GET
+
+  GetByRecipientIdFunctionLog:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref getByRecipientIdFunction]]
+      RetentionInDays: 30
 
   putItemsFunction:
     Type: AWS::Serverless::Function
@@ -66,6 +78,12 @@ Resources:
             Method: POST
             # Auth:
             #   ApiKeyRequired: true
+  
+  putItemsFunctionLog:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref putItemsFunction]]
+      RetentionInDays: 30
 
   SampleTable:
     Type: AWS::DynamoDB::Table
