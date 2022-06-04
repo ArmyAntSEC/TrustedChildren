@@ -40,5 +40,6 @@ jobs:
           working-directory: ./Backend
       steps:
         - uses: actions/checkout@v2      
+        - run: echo "{\"API_KEY\":\"${{ secrets.API_KEY }}\"}" > __tests__/live/config.json
         - run: yarn
         - run: yarn test -- __tests__/live/
