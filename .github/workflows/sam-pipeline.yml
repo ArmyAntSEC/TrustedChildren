@@ -39,5 +39,6 @@ jobs:
         run:
           working-directory: ./Backend
       steps:
+        - uses: actions/checkout@v2      
         - run: yarn
         - run: yarn test -- __tests__/live/
