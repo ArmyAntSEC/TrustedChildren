@@ -20,8 +20,7 @@ exports.handlerWrapper = async function (event, handler) {
         }
     } catch (exception) {
         if (exception instanceof ErrorResponse) {
-            const rValue = response(exception.statusCode, exception.body)
-            return rValue;
+            return response(exception.statusCode, exception.body)            
         } else {
             return response(500, "Internal Server Error")
         }
