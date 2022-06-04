@@ -46,7 +46,7 @@ describe('Test putItemsHandler', function () {
 
         await doActualCallAndCheckReturn(sentItem);
 
-        var params1 = {
+        const params1 = {
             TableName: undefined,
             Item: {
                 senderID: sentItem.senderID,
@@ -73,7 +73,7 @@ describe('Test putItemsHandler', function () {
 
         await doActualCallAndCheckReturn(sentItem);
 
-        var params1 = {
+        const params1 = {
             TableName: undefined,
             Item: {
                 senderID: sentItem.senderID,
@@ -82,7 +82,7 @@ describe('Test putItemsHandler', function () {
             }
         };
 
-        var params2 = {
+        const params2 = {
             TableName: undefined,
             Item: {
                 senderID: sentItem.senderID,
