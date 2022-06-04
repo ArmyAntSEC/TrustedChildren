@@ -6,6 +6,7 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2      
       - run: pwd
       - run: ls
       - run: cd Backend && npm test -- __tests__/unit/
