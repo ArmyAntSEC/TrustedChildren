@@ -34,7 +34,7 @@ describe('Test getByRecipientIdHandler', () => {
         }
 
         // Invoke getByIdHandler() 
-        //const result = await lambda.getByRecipientIdHandler(event);
+        const result = await lambda.getByRecipientIdHandler(event);
 
         const expectedResult = {
             statusCode: 200,
@@ -42,6 +42,6 @@ describe('Test getByRecipientIdHandler', () => {
         };
 
         // Compare the result with the expected result 
-        //expect(result).toEqual(expectedResult);
+        expect(result).toEqual(expectedResult);
     });
 });
