@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/handlers/putSingleItem.test.js">
-    <testCase name="Test putItemsHandler should add a single id to the table" duration="7"/>
+    <testCase name="Test putItemsHandler should add a single id to the table" duration="5"/>
     <testCase name="Test putItemsHandler should add two ids to the table" duration="2"/>
   </file>
-  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/handlers/getByRecipientId.test.js">
-    <testCase name="Test getByRecipientIdHandler should get item by id" duration="3"/>
-  </file>
   <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/utils/apiUtils.test.js">
-    <testCase name="Test verifyProperMethod should accept the correct one" duration="3"/>
-    <testCase name="Test verifyProperMethod should not accept the wrong one" duration="12"/>
-    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on success" duration="2"/>
-    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on empty data" duration="1"/>
+    <testCase name="Test verifyProperMethod should accept the correct one" duration="2"/>
+    <testCase name="Test verifyProperMethod should not accept the wrong one" duration="10"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on success" duration="1"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on empty data" duration="0"/>
     <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on expected failure" duration="1"/>
-    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on unxpected failure" duration="0"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on unxpected failure" duration="1"/>
     <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on bad API Key" duration="0"/>
   </file>
   <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/utils/apiKeyHandling.test.js">
     <testCase name="Test verifyAPIKey should verify the standard API keys" duration="2"/>
-    <testCase name="Test verifyAPIKey should fail on the wrong standard API keys" duration="11"/>
+    <testCase name="Test verifyAPIKey should fail on the wrong standard API keys" duration="7"/>
+  </file>
+  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/handlers/getByRecipientId.test.js">
+    <testCase name="Test getByRecipientIdHandler should get item by id" duration="1"/>
   </file>
 </testExecutions>
