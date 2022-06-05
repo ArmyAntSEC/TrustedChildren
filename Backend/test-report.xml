@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/live/roundtrip.live.test.js">
-    <testCase name="Test roundtrip should put two items and then retrieve them" duration="3346"/>
-    <testCase name="Test roundtrip should not put with wrong API key" duration="97"/>
-    <testCase name="Test roundtrip should not put with wrong API key" duration="79"/>
+  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/handlers/putSingleItem.test.js">
+    <testCase name="Test putItemsHandler should add a single id to the table" duration="6"/>
+    <testCase name="Test putItemsHandler should add two ids to the table" duration="1"/>
+  </file>
+  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/handlers/getByRecipientId.test.js">
+    <testCase name="Test getByRecipientIdHandler should get item by id" duration="2"/>
+  </file>
+  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/utils/apiUtils.test.js">
+    <testCase name="Test verifyProperMethod should accept the correct one" duration="4"/>
+    <testCase name="Test verifyProperMethod should not accept the wrong one" duration="15"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on success" duration="2"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on empty data" duration="1"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on expected failure" duration="0"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on unxpected failure" duration="1"/>
+    <testCase name="Test verifyProperMethod Test handlerWrapper should respond properly on bad API Key" duration="1"/>
+  </file>
+  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/unit/utils/apiKeyHandling.test.js">
+    <testCase name="Test verifyAPIKey should verify the standard API keys" duration="2"/>
+    <testCase name="Test verifyAPIKey should fail on the wrong standard API keys" duration="23"/>
   </file>
 </testExecutions>
