@@ -1,4 +1,4 @@
-const apiUtils = require('./apiKeyHandling.js');
+const verifyStandardKey = require('./apiKeyHandling.js').verifyStandardKey;
 const ErrorResponse = require('./ErrorResponse.js').ErrorResponse;
 
 exports.verifyProperMethod = function (event, method) {

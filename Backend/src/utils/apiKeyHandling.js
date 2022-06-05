@@ -1,7 +1,7 @@
 const crypto = require('node:crypto');
 const ErrorResponse = require('./ErrorResponse.js').ErrorResponse;
 
-verifyStandardKey = function (event) {
+exports.verifyStandardKey = function (event) {
     const apiKey = event.headers['x-api-key']
     const hashedApiKey = process.env.HASHED_API_KEY;
     const hash = hashKey(apiKey);
@@ -9,7 +9,6 @@ verifyStandardKey = function (event) {
         throw new ErrorResponse(403, "Forbidden");
     }
 }
-exports.verifyStandardKey = verifyStandardKey;
 
 function hashKey(apiKey) {
     const hasher = crypto.createHash('sha256');
