@@ -15,3 +15,7 @@ For more details, see the [wiki](https://github.com/ArmyAntSEC/TrustedChildren/w
 For app design, see https://www.figma.com/file/zCRWFsNT5eds0EcHUzoSjO/TrustedChildren-App?node-id=0%3A1
 
 For the latest SonarCube analysis, see https://sonarcloud.io/project/overview?id=ArmyAntSEC_TrustedChildrenBackend. Note that code coverage is not measured using SonarCloud but directly in Jest.
+
+## Licensing
+
+The entire project is currently distributed under the GPL. The door is kept open to at some point apply a less sharing version of the license. As such, only contributions licensed under the MIT license will be accepted. All contributions submitted are assumed to be licensed under the MIT license if nothing else is stated.
