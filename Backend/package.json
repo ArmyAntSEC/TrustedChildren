@@ -11,8 +11,7 @@
     },
     "devDependencies": {
         "jest": "^28.1.0",
-        "jest-sonar": "^0.2.12",
-        "jest-sonar-reporter": "^2.0.0",
+        "jest-sonar": "^0.2.12",        
         "sonarqube-scanner": "^2.8.1"
     },
     "scripts": {
