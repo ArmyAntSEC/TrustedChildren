@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="/Users/danielarmyr/Documents/code/TrustedChildren/Backend/__tests__/live/roundtrip.live.test.js">
+    <testCase name="Test roundtrip should put two items and then retrieve them" duration="3346"/>
+    <testCase name="Test roundtrip should not put with wrong API key" duration="97"/>
+    <testCase name="Test roundtrip should not put with wrong API key" duration="79"/>
+  </file>
+</testExecutions>
