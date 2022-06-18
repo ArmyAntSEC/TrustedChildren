@@ -7,6 +7,6 @@ At Trusted Children, we believe that children should be given the freedom to exp
 Trusted Children is developed by privacy-minded parents. We believe that for children to thrive, they must grow up in an environment where children are trusted to make good decisions even when adults are not watching. But we also know that children will make mistakes, and they need to know that adults will protect them from the worst consequences of those mistakes.
 
 # Links
-* [Technical Documentation](https://github.com/ArmyAntSEC/TrustedChildren/wiki)
+* [Documentation](https://github.com/ArmyAntSEC/TrustedChildren/wiki)
 
 
