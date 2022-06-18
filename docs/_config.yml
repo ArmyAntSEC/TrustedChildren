@@ -1,1 +1,8 @@
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'docs/**' 
+
 theme: jekyll-theme-slate
