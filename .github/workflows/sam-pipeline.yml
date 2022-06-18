@@ -2,6 +2,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'Backend/**' 
 jobs:
   unit-test:
     runs-on: ubuntu-latest    
