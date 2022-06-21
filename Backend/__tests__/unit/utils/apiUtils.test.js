@@ -58,7 +58,7 @@ describe('Test verifyProperMethod', function () {
 
         it('should respond properly on unxpected failure', async () => {
             process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
-            const handler = function (_event) { throw new Error("Error") }
+            const handler = function (_event) { throw new Error("Test Error") }
             const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
 
             const response = await apiUtils.handlerWrapper(event, handler);

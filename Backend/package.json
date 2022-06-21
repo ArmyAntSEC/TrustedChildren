@@ -2,8 +2,9 @@
     "name": "delete-test-01",
     "description": "delete-test-01-description",
     "version": "0.0.1",
-    "private": true,
+    "private": true,    
     "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.113.0",
         "aws-sdk": "^2.1140.0",
         "axios": "^0.27.2",
         "eslint": "^8.16.0",
@@ -11,20 +12,20 @@
     },
     "devDependencies": {
         "jest": "^28.1.0",
-        "jest-sonar": "^0.2.12",        
+        "jest-sonar": "^0.2.12",
         "sonarqube-scanner": "^2.8.1"
     },
     "scripts": {
         "test": "jest"
     },
-    "jest": {        
+    "jest": {
         "coverageThreshold": {
             "global": {
-              "branches": 90,
-              "functions": 90,
-              "lines": 90,
-              "statements": -10
+                "branches": 90,
+                "functions": 90,
+                "lines": 90,
+                "statements": -10
             }
-          }
+        }
     }
 }
