@@ -17,34 +17,16 @@ Globals:
         HASHED_API_KEY: "c8b51b731a62386fd89d9598fb3508c2ff396b91282a888fad66bc615a4771ba"
 
 Resources:
-  helloWorldFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/helloWorld.helloWorld
-      Description: A simple Hello World example
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /hello
-            Method: GET
-  
-  HelloWorldFunctionLog:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Join ['/', ['/aws/lambda', !Ref helloWorldFunction]]
-      RetentionInDays: 30
-
   getByRecipientIdFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref LastKnownPositionsTable
       Environment:
         Variables:
-          SAMPLE_TABLE: !Ref SampleTable
+          LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
       Events:
         Api:
           Type: Api
@@ -65,11 +47,11 @@ Resources:
       Policies:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref LastKnownPositionsTable
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
-          SAMPLE_TABLE: !Ref SampleTable
+          LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
       Events:
         Api:
           Type: Api
@@ -85,7 +67,7 @@ Resources:
       LogGroupName: !Join ['/', ['/aws/lambda', !Ref putItemsFunction]]
       RetentionInDays: 30
 
-  SampleTable:
+  LastKnownPositionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       BillingMode: PAY_PER_REQUEST

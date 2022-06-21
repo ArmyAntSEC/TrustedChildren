@@ -3,7 +3,7 @@ const apiUtilities = require('../utils/apiUtilities.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
 
-const tableName = process.env.SAMPLE_TABLE;
+const tableName = process.env.LAST_KNOWN_POSITIONS_TABLE;
 
 exports.getByRecipientIdHandler = async (event) => {
   return apiUtilities.handlerWrapper(event, doGetByRecipientID);

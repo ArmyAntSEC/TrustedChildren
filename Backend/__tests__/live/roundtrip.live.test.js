@@ -47,14 +47,18 @@ describe('Test roundtrip', () => {
                 }]
             }
         }
+
+
         const response2 = await axios(request2)
         expect(response2.status).toEqual(204);
+
 
         const request3 = {
             url: baseURL + recipientID,
             method: "get",
             headers: { "x-api-key": myConfig.API_KEY }
         }
+
         const response3 = await axios(request3)
         expect(response3.status).toEqual(200);
         expect(response3.data.Count).toEqual(2);
@@ -76,8 +80,6 @@ describe('Test roundtrip', () => {
         expect(response4.data.Items[0].recipientID).toEqual(recipientID2);
         expect(response4.data.Items[0].senderID).toEqual(senderID);
         expect(response4.data.Items[0].data).toEqual(data2);
-
-
     });
 
     it('should not put with wrong API key', async () => {

@@ -3,7 +3,7 @@ const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
 
 
-const tableName = process.env.SAMPLE_TABLE;
+const tableName = process.env.LAST_KNOWN_POSITIONS_TABLE;
 
 exports.putItemsHandler = async (event) => {
     return apiUtilities.handlerWrapper(event, doPutItems);
