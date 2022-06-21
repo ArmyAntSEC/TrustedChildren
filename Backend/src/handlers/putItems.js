@@ -8,6 +8,7 @@ const tableName = process.env.SAMPLE_TABLE;
 exports.putItemsHandler = async (event) => {
     return apiUtilities.handlerWrapper(event, doPutItems);
 }
+
 async function doPutItems(event) {
     apiUtilities.verifyProperMethod(event, "POST");
 

@@ -1,5 +1,5 @@
 {
-    "configurations": [
+    "configurations": [        
         {
             "type": "aws-sam",
             "request": "direct-invoke",
@@ -36,19 +36,15 @@
             }
         },
         {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "sam_test:HelloWorldFunction (nodejs14.x)",
-            "invokeTarget": {
-                "target": "template",
-                "templatePath": "${workspaceFolder}/template.yaml",
-                "logicalId": "HelloWorldFunction"
-            },
-            "lambda": {
-                "payload": {},
-                "environmentVariables": {},
-                "runtime": "nodejs14.x"
+            "type": "node",
+            "request": "launch",
+            "name": "Jest: current file",            
+            "program": "${workspaceFolder}/Backend/node_modules/.bin/jest",
+            "args": ["${fileBasenameNoExtension}",  "--config", "Backend/package.json"],
+            "console": "integratedTerminal",            
+            "windows": {
+              "program": "${workspaceFolder}/Backend/node_modules/jest/bin/jest"
             }
-        }
+          }     
     ]
 }

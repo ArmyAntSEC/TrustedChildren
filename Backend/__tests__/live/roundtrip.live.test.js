@@ -1,7 +1,7 @@
 const { config } = require("aws-sdk");
 
 const axios = require("axios").default
-const myConfig = require("./config.json")
+const myConfig = require("../config/config.json")
 const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/";
 
 describe('Test roundtrip', () => {
