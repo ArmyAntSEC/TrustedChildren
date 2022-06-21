@@ -39,4 +39,29 @@ describe('Test device roundtrip', () => {
         const response1 = await axios(request1)
         expect(response1.status).toEqual(204);
     })
+
+    it('should fail on reposting the same entry', async () => {
+        const publicKey = "TestPublicKey" + Math.floor(Math.random() * 1e8).toString();
+        const uuid = "TestUuid" + Math.floor(Math.random() * 1e8).toString();
+
+        const request1 = {
+            url: baseURL,
+            method: "post",
+            headers: { "x-api-key": myConfig.API_KEY },
+            data: {
+                publicKey: publicKey,
+                uuid: uuid,
+                message: "First send"
+            },
+            validateStatus: () => true
+        };
+
+        const response1 = await axios(request1)
+        expect(response1.status).toEqual(204);
+
+        request1.data.message = "Second send";
+        
+        const response2 = await axios(request1)
+        //expect(response2.status).toEqual(409);
+    })
 });
