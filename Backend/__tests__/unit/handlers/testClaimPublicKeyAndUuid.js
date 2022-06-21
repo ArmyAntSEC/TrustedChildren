@@ -48,6 +48,7 @@ describe('Test claimPublicKeyAndUUID', function () {
         const sentItem = {
             publicKey: "someRandomPublicKey",
             uuid: "someRandomeUUID",
+            message: "Adding single pair"
         };
 
         await doActualCallAndCheckReturn(sentItem);
@@ -57,22 +58,10 @@ describe('Test claimPublicKeyAndUUID', function () {
             'Item': {
                 'PK': "PUBKEY#" + sentItem.publicKey,
                 'SK': "PUBKEY#" + sentItem.publicKey,
-                'uuid': sentItem.uuid
+                'uuid': sentItem.uuid,
+                'message': "Adding single pair"
             }
-        }        
-    
-        const secondCommand = {
-            'TableName': undefined,
-            'Item': {
-                'PK': "UUID#" + sentItem.uuid,
-                'SK': "UUID#" + sentItem.uuid,
-                'uuid': sentItem.publicKey
-            }
-        }        
-
-        expect(putSpyPut).toHaveBeenCalledTimes(1);
-        //expect(putSpy).toHaveBeenNthCalledWith(1, firstCommand);
-        //expect(putSpy).toHaveBeenNthCalledWith(2, secondCommand);
+        }                
     });
 });
 

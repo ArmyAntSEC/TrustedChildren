@@ -12,7 +12,8 @@ describe('Test device roundtrip', () => {
             headers: { "x-api-key": "Bad key" },
             data: {
                 "publicKey": "Does not",
-                "uuid": "matter"
+                "uuid": "matter",
+                'message': "Should never be seen"
             },
             validateStatus: () => true
         };
@@ -31,7 +32,8 @@ describe('Test device roundtrip', () => {
             headers: { "x-api-key": myConfig.API_KEY },
             data: {
                 "publicKey": publicKey,
-                "uuid": uuid
+                "uuid": uuid,
+                'message': "Adding single pair"
             },
             validateStatus: () => true
         };

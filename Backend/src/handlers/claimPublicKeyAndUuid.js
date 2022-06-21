@@ -16,6 +16,7 @@ async function doClaimPublicKeyAndUuid(event) {
 
     const publicKey = body.publicKey;
     const uuid = body.uuid;
+    const message = body.message;
     
 
     const firstCommand = {
@@ -24,7 +25,8 @@ async function doClaimPublicKeyAndUuid(event) {
         'Item': {
             'PK': "PUBKEY#" + publicKey,
             'SK': "PUBKEY#" + publicKey,
-            'uuid': uuid            
+            'uuid': uuid,
+            'message': message            
         }
     }
     const firstTransaction = {
@@ -36,19 +38,11 @@ async function doClaimPublicKeyAndUuid(event) {
     }
 
     console.debug( JSON.stringify(firstTransaction));
-    await docClient.transactWrite(firstTransaction).promise();    
-
-    const secondCommand = {
-        'TableName': tableName,
-        'Item': {
-            'PK': "UUID#" + uuid,
-            'SK': "UUID#" + uuid,
-            'uuid': publicKey
-        }
-    }
-    console.debug( JSON.stringify(secondCommand));
-
-    await docClient.put(secondCommand).promise();    
-
+    const result = await docClient.transactWrite(firstTransaction);    
+    result.promise().then( function(data){
+        //Do nothing.
+    }, function(error){
+        console.error( error );
+    });
 
 }
