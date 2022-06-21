@@ -31,7 +31,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /{recipientID}
+            Path: /positions/{recipientID}
             Method: GET
 
   GetByRecipientIdFunctionLog:
@@ -56,7 +56,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /positions
             Method: POST
             # Auth:
             #   ApiKeyRequired: true
