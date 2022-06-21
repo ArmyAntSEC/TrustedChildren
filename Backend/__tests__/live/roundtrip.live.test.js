@@ -4,7 +4,7 @@ const axios = require("axios").default
 const myConfig = require("../config/config.json")
 const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/positions/";
 
-describe('Test roundtrip', () => {
+describe('Test position roundtrip', () => {
 
     it('should put two items and then retrieve them', async () => {
         const senderID = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
@@ -99,7 +99,7 @@ describe('Test roundtrip', () => {
 
     })
 
-    it('should not put with wrong API key', async () => {
+    it('should not get with wrong recipientID', async () => {
         const request = {
             url: baseURL + "doesNotMatter",
             method: "get",

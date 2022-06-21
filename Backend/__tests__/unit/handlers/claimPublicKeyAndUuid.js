@@ -44,32 +44,27 @@ describe('Test claimPublicKeyAndUUID', function () {
 
         await doActualCallAndCheckReturn(sentItem);
 
-        const params1 = [{
-            'Put': {
-                'TableName': undefined,
-                'Item': {
-                    'PK': { 'S': 'PUBKEY#' + sentItem.publicKey },
-                    'SK': { 'S': 'PUBKEY#' + sentItem.publicKey },
-                    'uuid': { 'S': sentItem.uuid }
-                },
-                'ConditionExpression': 'attribute_not_exists(PK)'
+        const firstCommand = {
+            'TableName': undefined,
+            'Item': {
+                'PK': "PUBKEY#" + sentItem.publicKey,
+                'SK': "PUBKEY#" + sentItem.publicKey,
+                'uuid': sentItem.uuid
             }
-        },
-        {
-            'Put': {
-                'TableName': undefined,
-                'Item': {
-                    'PK': { 'S': "UUID#" + sentItem.uuid },
-                    'SK': { 'S': "UUID#" + sentItem.uuid },
-                    'publicKey': { 'S': sentItem.publicKey }
-                },
-                'ConditionExpression': 'attribute_not_exists(PK)'
+        }        
+    
+        const secondCommand = {
+            'TableName': undefined,
+            'Item': {
+                'PK': "UUID#" + sentItem.uuid,
+                'SK': "UUID#" + sentItem.uuid,
+                'uuid': sentItem.publicKey
             }
-        }];
+        }        
 
-
-        expect(putSpy).toHaveBeenCalledTimes(1);
-        expect(putSpy).toHaveBeenNthCalledWith(1, params1);
+        expect(putSpy).toHaveBeenCalledTimes(2);
+        expect(putSpy).toHaveBeenNthCalledWith(1, firstCommand);
+        expect(putSpy).toHaveBeenNthCalledWith(2, secondCommand);
     });
 });
 

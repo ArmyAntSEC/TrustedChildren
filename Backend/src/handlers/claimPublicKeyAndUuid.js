@@ -3,7 +3,7 @@ const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
 
 
-const tableName = process.env.PUBLIC_KEY_UUID_MAPPING;
+const tableName = process.env.PUBLIC_KEY_AND_UUID_MAPPING_TABLE;
 
 exports.claimPublicKeyAndUuidHandler = async (event) => {
     return apiUtilities.handlerWrapper(event, doClaimPublicKeyAndUuid);
@@ -17,32 +17,30 @@ async function doClaimPublicKeyAndUuid(event) {
     const publicKey = body.publicKey;
     const uuid = body.uuid;
 
-    const params = [
-        {
-            'Put': {
-                'TableName': tableName,
-                'Item': {
-                    'PK': { 'S': 'PUBKEY#' + publicKey },
-                    'SK': { 'S': 'PUBKEY#' + publicKey },
-                    'uuid': { 'S': uuid }
-                },
-                'ConditionExpression': 'attribute_not_exists(PK)'
-            }
-        },
-        {
-            'Put': {
-                'TableName': tableName,
-                'Item': {
-                    'PK': { 'S': "UUID#" + uuid },
-                    'SK': { 'S': "UUID#" + uuid },
-                    'publicKey': {'S': publicKey }
-                },
-                'ConditionExpression': 'attribute_not_exists(PK)'
-            }
+    const firstCommand = {
+        'TableName': tableName,
+        'Item': {
+            'PK': "PUBKEY#" + publicKey,
+            'SK': "PUBKEY#" + publicKey,
+            'uuid': uuid
         }
-    ];
+    }
+    console.debug( JSON.stringify(firstCommand));
 
-    await docClient.put(params).promise();
+    const secondCommand = {
+        'TableName': tableName,
+        'Item': {
+            'PK': "UUID#" + uuid,
+            'SK': "UUID#" + uuid,
+            'uuid': publicKey
+        }
+    }
+    console.debug( JSON.stringify(secondCommand));
+
+    
+
+    await docClient.put(firstCommand).promise();    
+    await docClient.put(secondCommand).promise();    
 
 
 }

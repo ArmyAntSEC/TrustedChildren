@@ -15,18 +15,37 @@ Globals:
     Environment:
       Variables:
         HASHED_API_KEY: "c8b51b731a62386fd89d9598fb3508c2ff396b91282a888fad66bc615a4771ba"
+        PUBLIC_KEY_AND_UUID_MAPPING_TABLE: !Ref PublicKeyAndUuidMappingTable
+        LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
 
 Resources:
-  getByRecipientIdFunction:
+  ClaimPublicKeyAndUuidFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/claimPublicKeyAndUuid.claimPublicKeyAndUuidHandler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PublicKeyAndUuidMappingTable          
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /devices/
+            Method: POST
+
+  ClaimPublicKeyAndUuidFunctionLog:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref ClaimPublicKeyAndUuidFunction]]
+      RetentionInDays: 30
+
+  GetByRecipientIdFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref LastKnownPositionsTable
-      Environment:
-        Variables:
-          LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
+            TableName: !Ref LastKnownPositionsTable      
       Events:
         Api:
           Type: Api
@@ -37,34 +56,27 @@ Resources:
   GetByRecipientIdFunctionLog:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Join ['/', ['/aws/lambda', !Ref getByRecipientIdFunction]]
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref GetByRecipientIdFunction]]
       RetentionInDays: 30
 
-  putItemsFunction:
+  PutItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/putItems.putItemsHandler
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref LastKnownPositionsTable
-      Environment:
-        Variables:
-          # Make table name accessible as environment variable from function code during execution
-          LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
+            TableName: !Ref LastKnownPositionsTable          
       Events:
         Api:
           Type: Api
           Properties:
             Path: /positions
             Method: POST
-            # Auth:
-            #   ApiKeyRequired: true
   
-  putItemsFunctionLog:
+  PutItemsFunctionLog:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Join ['/', ['/aws/lambda', !Ref putItemsFunction]]
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref PutItemsFunction]]
       RetentionInDays: 30
 
   LastKnownPositionsTable:
@@ -80,4 +92,19 @@ Resources:
         - AttributeName: recipientID
           KeyType: HASH
         - AttributeName: senderID
+          KeyType: RANGE
+  
+  PublicKeyAndUuidMappingTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
           KeyType: RANGE
