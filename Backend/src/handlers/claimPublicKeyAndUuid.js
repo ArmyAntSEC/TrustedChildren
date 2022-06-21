@@ -16,16 +16,27 @@ async function doClaimPublicKeyAndUuid(event) {
 
     const publicKey = body.publicKey;
     const uuid = body.uuid;
+    
 
     const firstCommand = {
         'TableName': tableName,
+        'ConditionExpression': 'attribute_not_exists(PK)',
         'Item': {
             'PK': "PUBKEY#" + publicKey,
             'SK': "PUBKEY#" + publicKey,
-            'uuid': uuid
+            'uuid': uuid            
         }
     }
-    console.debug( JSON.stringify(firstCommand));
+    const firstTransaction = {
+        "TransactItems": [
+            {
+                "Put": firstCommand
+            }
+        ]
+    }
+
+    console.debug( JSON.stringify(firstTransaction));
+    await docClient.transactWrite(firstTransaction).promise();    
 
     const secondCommand = {
         'TableName': tableName,
@@ -37,9 +48,6 @@ async function doClaimPublicKeyAndUuid(event) {
     }
     console.debug( JSON.stringify(secondCommand));
 
-    
-
-    await docClient.put(firstCommand).promise();    
     await docClient.put(secondCommand).promise();    
 
 
