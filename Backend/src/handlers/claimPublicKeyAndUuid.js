@@ -29,20 +29,7 @@ async function doClaimPublicKeyAndUuid(event) {
             'message': message            
         }
     }
-    const firstTransaction = {
-        "TransactItems": [
-            {
-                "Put": firstCommand
-            }
-        ]
-    }
 
-    console.debug( JSON.stringify(firstTransaction));
-    const result = await docClient.transactWrite(firstTransaction);    
-    result.promise().then( function(data){
-        //Do nothing.
-    }, function(error){
-        console.error( error );
-    });
-
+    console.debug( JSON.stringify(firstCommand));
+    await docClient.put(firstCommand).promise();        
 }

@@ -5,6 +5,18 @@ const myConfig = require("../config/config.json")
 const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/devices/";
 
 describe('Test device roundtrip', () => {    
+    async function getPublicKeyOnFile( uuid) {
+        const request = {
+            url: baseURL + uuid,
+            method: "get",
+            headers: { "x-api-key": myConfig.API_KEY }
+        }
+
+        const response = await axios(request)
+        expect(response.status).toEqual(200);
+        return response.data.publicKey;
+    }
+
     it('should not post with wrong API key', async () => {
         const request1 = {
             url: baseURL,
@@ -20,6 +32,8 @@ describe('Test device roundtrip', () => {
 
         const response1 = await axios(request1)
         expect(response1.status).toEqual(403);
+
+        //expect(getPublicKeyOnFile("matter")).toEqual({});
     })
 
     it('should post new entries successfully', async () => {
@@ -40,6 +54,8 @@ describe('Test device roundtrip', () => {
 
         const response1 = await axios(request1)
         expect(response1.status).toEqual(204);
+
+        //expect(getPublicKeyOnFile(uuid)).toEqual(publicKey);
     })
 
     it('should fail on reposting the same entry', async () => {
