@@ -5,13 +5,30 @@
             "ConditionExpression": "attribute_not_exists(PK)",
             "Item": {
                 "PK": {
-                    "S": "PUBKEY#RandomPubKey$randomKey"
+                    "S": "PUBKEY#RandomPubKey"
                 },
                 "SK": {
-                    "S": "PUBKEY#RandomPubKey$randomKey"
+                    "S": "PUBKEY#RandomPubKey"
                 },
                 "uuid": {
-                    "S": "RandomUUID$randomUuid"
+                    "S": "RandomUUID"
+                }
+            }
+        }
+    },
+    {
+        "Put": {
+            "TableName": "UuidAndPublicKeyMap",
+            "ConditionExpression": "attribute_not_exists(PK)",
+            "Item": {
+                "PK": {
+                    "S": "UUID#RandomUuid"
+                },
+                "SK": {
+                    "S": "UUID#RandomUuid"
+                },
+                "publicKey": {
+                    "S": "RandomPubKey"
                 }
             }
         }
