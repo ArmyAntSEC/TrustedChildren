@@ -17,6 +17,29 @@ Globals:
         HASHED_API_KEY: "c8b51b731a62386fd89d9598fb3508c2ff396b91282a888fad66bc615a4771ba"
 
 Resources:
+  claimPublicKeyAndUuidFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/claimPublicKeyAndUuid.claimPublicKeyAndUuidHandler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UuidAndPublicKeyMap
+      Environment:
+        Variables:
+          PUBLIC_KEY_UUID_MAPPING: !Ref UuidAndPublicKeyMap
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /devices
+            Method: POST
+
+  claimPublicKeyAndUuidFunctionLog:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref claimPublicKeyAndUuidFunction]]
+      RetentionInDays: 30
+
   getByRecipientIdFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -80,4 +103,19 @@ Resources:
         - AttributeName: recipientID
           KeyType: HASH
         - AttributeName: senderID
+          KeyType: RANGE
+
+  UuidAndPublicKeyMap:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
           KeyType: RANGE

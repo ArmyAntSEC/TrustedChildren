@@ -1,4 +1,7 @@
 {
-    "httpMethod": "POST",
-    "body": "{\"recipientID\": \"id1\",\"senderID\": \"id2\",\"data\": \"This is the data\"}"
+    "httpMethod": "POST",    
+    "headers": {
+        "x-api-key": "<add this>"
+    },
+    "body": "{\"senderID\": \"testSender\",\"messages\":[{\"recipientID\": \"testRecipient\",\"data\": \"testData\"}]}"
 }

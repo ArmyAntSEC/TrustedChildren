@@ -1,0 +1,7 @@
+{
+    "httpMethod": "POST",    
+    "headers": {
+        "x-api-key": "<add this>"
+    },
+    "body": "{\"publicKey\": \"someRandomPublicKey\",\"uuid\": \"someRandomeUUID\"}"
+}
