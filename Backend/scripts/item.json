@@ -5,13 +5,13 @@
             "ConditionExpression": "attribute_not_exists(PK)",
             "Item": {
                 "PK": {
-                    "S": "PUBKEY#RandomPubKey"
+                    "S": "PUBKEY#ScriptRandomPubKey"
                 },
                 "SK": {
-                    "S": "PUBKEY#RandomPubKey"
+                    "S": "PUBKEY#ScriptRandomPubKey"
                 },
                 "uuid": {
-                    "S": "RandomUUID"
+                    "S": "ScriptRandomUUID"
                 }
             }
         }
@@ -22,13 +22,13 @@
             "ConditionExpression": "attribute_not_exists(PK)",
             "Item": {
                 "PK": {
-                    "S": "UUID#RandomUuid"
+                    "S": "UUID#ScriptRandomUuid"
                 },
                 "SK": {
-                    "S": "UUID#RandomUuid"
+                    "S": "UUID#ScriptRandomUuid"
                 },
                 "publicKey": {
-                    "S": "RandomPubKey"
+                    "S": "ScriptRandomPubKey"
                 }
             }
         }

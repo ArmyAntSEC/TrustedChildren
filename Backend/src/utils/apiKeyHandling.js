@@ -6,6 +6,7 @@ exports.verifyStandardKey = function (event) {
     const hashedApiKey = process.env.HASHED_API_KEY;
     const hash = hashKey(apiKey);
     if (hash !== hashedApiKey) {
+        console.error("API key sent: " + apiKey + " Hashed API key expected: " + hashedApiKey );        
         throw new ErrorResponse(403, "Forbidden");
     }
 }

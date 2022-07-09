@@ -67,9 +67,18 @@ describe('Test claimPublicKeyAndUUID', function () {
             }
         }];
 
+        params2 = {
+            TableName: undefined,
+            Item: {
+                PK: "PUBKEY#" + sentItem.publicKey,
+                SK: "PUBKEY#" + sentItem.publicKey,
+                uuid: sentItem.uuid
+            },
+            ConditionExpression: "attribute_not_exists(PK)"
+        };
 
         expect(putSpy).toHaveBeenCalledTimes(1);
-        expect(putSpy).toHaveBeenNthCalledWith(1, params1);
+        expect(putSpy).toHaveBeenNthCalledWith(1, params2);
     });
 });
 

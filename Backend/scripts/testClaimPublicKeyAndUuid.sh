@@ -6,4 +6,7 @@ aws dynamodb transact-write-items --transact-items file://./scripts/item.json --
 echo "------"
 aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localhost:8000
 echo "------"
-#sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
+sam build
+sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
+echo "------"
+aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localhost:8000
