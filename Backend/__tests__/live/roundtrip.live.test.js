@@ -98,15 +98,4 @@ describe('Test roundtrip', () => {
         expect(response1.status).toEqual(403);
 
     })
-
-    it('should not put with wrong API key', async () => {
-        const request = {
-            url: baseURL + "doesNotMatter",
-            method: "get",
-            headers: { "x-api-key": "Bad key" },
-            validateStatus: () => true
-        }
-        const response = await axios(request)
-        expect(response.status).toEqual(403);
-    })
 });

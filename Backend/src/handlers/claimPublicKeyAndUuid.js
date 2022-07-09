@@ -67,6 +67,7 @@ async function doClaimPublicKeyAndUuid(event) {
 
     try {
         console.debug("Doing a put...");
+        console.debug( params2 );
         const response = await docClient.put(params2).promise();
         console.debug("Put succeeded");
     } catch (err) {
