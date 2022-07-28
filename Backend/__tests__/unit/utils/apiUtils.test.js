@@ -68,7 +68,7 @@ describe('Test verifyProperMethod', function () {
         });
 
         it('should respond properly on bad API Key', async () => {
-            process.env.HASHED_API_KEY = "Bad key";
+            process.env.HASHED_API_KEY = "BAD_KEY_12345";
             const handler = function (_event) { throw new Error("Error") }
             const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
 

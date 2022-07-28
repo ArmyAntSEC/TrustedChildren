@@ -12,7 +12,7 @@ describe('Test verifyAPIKey', function () {
     });
 
     it('should fail on the wrong standard API keys', async () => {
-        process.env.HASHED_API_KEY = "Wrong key";
+        process.env.HASHED_API_KEY = "WRONG_KEY_12345";
         const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
         function verify() {
             apiUtils.verifyStandardKey(event);
