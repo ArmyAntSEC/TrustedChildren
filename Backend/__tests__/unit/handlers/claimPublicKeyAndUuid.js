@@ -1,9 +1,6 @@
 const lambda = require('../../../src/handlers/claimPublicKeyAndUuid.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
-const myConfig = require("../../config/config.json")
-process.env.HASHED_API_KEY = myConfig.HASHED_API_KEY;
-
 describe('Test claimPublicKeyAndUUID', function () {
     let putSpy;
 
@@ -25,7 +22,7 @@ describe('Test claimPublicKeyAndUUID', function () {
     }
 
     beforeEach(() => {
-        putSpy = jest.spyOn(dynamodb.DocumentClient.prototype, 'put');
+        putSpy = jest.spyOn(dynamodb.DocumentClient.prototype, 'transactWrite');
 
         putSpy.mockReturnValue({
             promise: () => Promise.resolve(null)
@@ -44,41 +41,35 @@ describe('Test claimPublicKeyAndUUID', function () {
 
         await doActualCallAndCheckReturn(sentItem);
 
-        const params1 = [{
-            'Put': {
-                'TableName': undefined,
-                'Item': {
-                    'PK': { 'S': 'PUBKEY#' + sentItem.publicKey },
-                    'SK': { 'S': 'PUBKEY#' + sentItem.publicKey },
-                    'uuid': { 'S': sentItem.uuid }
+        const params1 = {
+            "TransactItems": [
+                {
+                    'Put': {
+                        'TableName': process.env.PUBLIC_KEY_UUID_MAPPING,
+                        'Item': {
+                            'PK': 'PUBKEY#' + sentItem.publicKey,
+                            'SK': 'PUBKEY#' + sentItem.publicKey,
+                            'uuid': sentItem.uuid
+                        },
+                        'ConditionExpression': 'attribute_not_exists(PK)'
+                    }
                 },
-                'ConditionExpression': 'attribute_not_exists(PK)'
-            }
-        },
-        {
-            'Put': {
-                'TableName': undefined,
-                'Item': {
-                    'PK': { 'S': "UUID#" + sentItem.uuid },
-                    'SK': { 'S': "UUID#" + sentItem.uuid },
-                    'publicKey': { 'S': sentItem.publicKey }
-                },
-                'ConditionExpression': 'attribute_not_exists(PK)'
-            }
-        }];
-
-        params2 = {
-            TableName: undefined,
-            Item: {
-                PK: "PUBKEY#" + sentItem.publicKey,
-                SK: "PUBKEY#" + sentItem.publicKey,
-                uuid: sentItem.uuid
-            },
-            ConditionExpression: "attribute_not_exists(PK)"
+                {
+                    'Put': {
+                        'TableName': process.env.PUBLIC_KEY_UUID_MAPPING,
+                        'Item': {
+                            'PK': "UUID#" + sentItem.uuid,
+                            'SK': "UUID#" + sentItem.uuid,
+                            'publicKey': sentItem.publicKey
+                        },
+                        'ConditionExpression': 'attribute_not_exists(PK)'
+                    }
+                }
+            ]
         };
 
         expect(putSpy).toHaveBeenCalledTimes(1);
-        expect(putSpy).toHaveBeenNthCalledWith(1, params2);
+        expect(putSpy).toHaveBeenNthCalledWith(1, params1);
     });
 });
 

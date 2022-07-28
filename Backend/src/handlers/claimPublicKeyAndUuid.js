@@ -1,10 +1,11 @@
 const apiUtilities = require("../utils/apiUtilities.js");
 const dynamodb = require("aws-sdk/clients/dynamodb");
-var AWS = require("aws-sdk");
+
 
 let options = {};
 
 if (process.env.AWS_SAM_LOCAL) {
+    const AWS = require("aws-sdk")
     options.endpoint = new AWS.Endpoint("http://host.docker.internal:8000");
     console.debug("Using local AWS endpoint.");
 } else {
@@ -21,7 +22,8 @@ exports.claimPublicKeyAndUuidHandler = async (event) => {
 }
 
 async function doClaimPublicKeyAndUuid(event) {
-    console.debug("Claim core handler started");
+    console.debug("Claim core handler started. TableName: " + tableName );
+
 
     apiUtilities.verifyProperMethod(event, "POST");
 
@@ -30,46 +32,38 @@ async function doClaimPublicKeyAndUuid(event) {
     const publicKey = body.publicKey;
     const uuid = body.uuid;
 
-    const params = [
-        {
-            "Put": {
-                "TableName": tableName,
-                "Item": {
-                    "PK": { "S": "PUBKEY#" + publicKey },
-                    "SK": { "S": "PUBKEY#" + publicKey },
-                    "uuid": { "S": uuid }
-                },
-                "ConditionExpression": "attribute_not_exists(PK)"
+    const params = {
+        "TransactItems": [
+            {
+                "Put": {
+                    "TableName": tableName,
+                    "Item": {
+                        "PK": "PUBKEY#" + publicKey,
+                        "SK": "PUBKEY#" + publicKey,
+                        "uuid": uuid
+                    },
+                    "ConditionExpression": "attribute_not_exists(PK)"
+                }
+            },
+            {
+                "Put": {
+                    "TableName": tableName,
+                    "Item": {
+                        "PK": "UUID#" + uuid,
+                        "SK": "UUID#" + uuid,
+                        "publicKey": publicKey
+                    },
+                    "ConditionExpression": "attribute_not_exists(PK)"
+                }
             }
-        },
-        {
-            "Put": {
-                "TableName": tableName,
-                "Item": {
-                    "PK": { "S": "UUID#" + uuid },
-                    "SK": { "S": "UUID#" + uuid },
-                    "publicKey": { "S": publicKey }
-                },
-                "ConditionExpression": "attribute_not_exists(PK)"
-            }
-        }
-    ];
-
-    const params2 = {
-        TableName: tableName,
-        Item: {
-            PK: "PUBKEY#" + publicKey,
-            SK: "PUBKEY#" + publicKey,
-            uuid: uuid
-        },
-        ConditionExpression: "attribute_not_exists(PK)"
+        ]
     };
 
     try {
         console.debug("Doing a put...");
-        console.debug( params2 );
-        const response = await docClient.put(params2).promise();
-        console.debug("Put succeeded");
+        console.debug( JSON.stringify(params) );
+        const response = await docClient.transactWrite(params).promise();
+        console.debug("Put succeeded: " + JSON.stringify(response));
     } catch (err) {
         console.error("Put failed");
         console.error( err );

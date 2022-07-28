@@ -1,10 +1,6 @@
 const lambda = require('../../../src/handlers/putItems.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
-const myConfig = require("../../config/config.json")
-process.env.HASHED_API_KEY = myConfig.HASHED_API_KEY;
-
-
 // This includes all tests for putItemHandler() 
 describe('Test putItemsHandler', function () {
     let putSpy;

@@ -206,6 +206,9 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/osx,node,linux,windows,sam
+
 Backend/__tests__/live/config.json
 Backend/test-report.xml
 Backend/__tests__/config/config.json
+Backend/docker
+Backend/scripts/item.json

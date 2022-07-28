@@ -11,5 +11,8 @@ aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localho
 echo "\n------ Building and then invoking local lambda to put event in database.\n"
 sam build
 sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
+echo "\n------ Invoking again. This should fail.\n"
+sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
+echo "\n------ The above should fail.\n"
 echo "\n------ Dumping local database again. 4 items should be there.\n"
 aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localhost:8000

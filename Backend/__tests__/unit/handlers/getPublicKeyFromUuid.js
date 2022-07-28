@@ -1,7 +1,5 @@
 const lambda = require('../../../src/handlers/getPublicKeyFromUuid.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
-const myConfig = require("../../config/config.json")
-process.env.HASHED_API_KEY = myConfig.HASHED_API_KEY;
 
 describe('Test getPublicKeyFromUuid', () => {
     let getSpy;

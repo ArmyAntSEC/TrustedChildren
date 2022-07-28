@@ -22,7 +22,8 @@ async function doPutItems(event) {
 
         const params = {
             TableName: tableName,
-            Item: { recipientID: recipientID, senderID: senderID, data: data }
+            Item: { recipientID: recipientID, senderID: senderID, data: data
+            }
         };
 
         await docClient.put(params).promise();
