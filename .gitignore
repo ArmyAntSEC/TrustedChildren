@@ -212,3 +212,5 @@ Backend/test-report.xml
 Backend/__tests__/config/config.json
 Backend/docker
 Backend/scripts/item.json
+Backend/buildspec.yml
+Backend/package-lock.json
