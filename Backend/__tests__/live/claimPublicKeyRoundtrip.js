@@ -1,7 +1,6 @@
 const { config } = require("aws-sdk");
 
 const axios = require("axios").default
-const myConfig = require("../config/config.json")
 const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/devices/";
 
 describe('Test public key and Uuid roundtrip', () => {
@@ -13,7 +12,7 @@ describe('Test public key and Uuid roundtrip', () => {
         const request1 = {
             url: baseURL,
             method: "post",
-            headers: { "x-api-key": myConfig.API_KEY },
+            headers: { "x-api-key": process.env.API_KEY },
             data: {
                 "publicKey": publicKey,
                 "uuid": uuid
@@ -24,7 +23,7 @@ describe('Test public key and Uuid roundtrip', () => {
         expect(response1.status).toEqual(204);
         
     });
-    /*
+    
     it('should not put with wrong API key', async () => {
         const request1 = {
             url: baseURL,
@@ -41,5 +40,5 @@ describe('Test public key and Uuid roundtrip', () => {
         expect(response1.status).toEqual(403);
 
     })
-    */
+    
 });

@@ -1,7 +1,6 @@
 const { config } = require("aws-sdk");
 
 const axios = require("axios").default
-const myConfig = require("../config/config.json")
 const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/";
 
 describe('Test roundtrip', () => {
@@ -18,7 +17,7 @@ describe('Test roundtrip', () => {
         const request1 = {
             url: baseURL,
             method: "post",
-            headers: { "x-api-key": myConfig.API_KEY },
+            headers: { "x-api-key": process.env.API_KEY },
             data: {
                 "senderID": senderID,
                 "messages": [{
@@ -38,7 +37,7 @@ describe('Test roundtrip', () => {
         const request2 = {
             url: baseURL,
             method: "post",
-            headers: { "x-api-key": myConfig.API_KEY },
+            headers: { "x-api-key": process.env.API_KEY },
             data: {
                 "senderID": senderID2,
                 "messages": [{
@@ -56,7 +55,7 @@ describe('Test roundtrip', () => {
         const request3 = {
             url: baseURL + recipientID,
             method: "get",
-            headers: { "x-api-key": myConfig.API_KEY }
+            headers: { "x-api-key": process.env.API_KEY }
         }
 
         const response3 = await axios(request3)
@@ -72,7 +71,7 @@ describe('Test roundtrip', () => {
         const request4 = {
             url: baseURL + recipientID2,
             method: "get",
-            headers: { "x-api-key": myConfig.API_KEY }
+            headers: { "x-api-key": process.env.API_KEY }
         }
         const response4 = await axios(request4)
         expect(response4.status).toEqual(200);
