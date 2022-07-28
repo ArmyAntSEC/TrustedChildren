@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >-
-  Trysted Children V2
+  Trusted Children 0.2
 
 Transform: AWS::Serverless-2016-10-31
 
