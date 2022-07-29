@@ -1,17 +1,4 @@
 const apiUtilities = require("../utils/apiUtilities.js");
-const dynamodb = require("aws-sdk/clients/dynamodb");
-
-let options = {};
-
-if (process.env.AWS_SAM_LOCAL) {
-  const AWS = require("aws-sdk")
-  options.endpoint = new AWS.Endpoint("http://host.docker.internal:8000");
-  console.debug("Using local AWS endpoint.");
-}
-
-const docClient = new dynamodb.DocumentClient(options);
-
-const tableName = process.env.PUBLIC_KEY_UUID_MAPPING;
 
 exports.claimPublicKeyAndUuidHandler = async (event) => {
   return apiUtilities.handlerWrapper(event, doClaimPublicKeyAndUuid);
@@ -25,7 +12,9 @@ async function doClaimPublicKeyAndUuid(event) {
 
   const publicKey = body.publicKey;
   const uuid = body.uuid;
+  const tableName = process.env.PUBLIC_KEY_UUID_MAPPING;
 
+  const docClient = apiUtilities.createDocClient();
   const params = {
     "TransactItems": [
       {
@@ -59,6 +48,4 @@ async function doClaimPublicKeyAndUuid(event) {
     console.error(err);
     throw (err);
   }
-
-
 }
