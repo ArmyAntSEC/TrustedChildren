@@ -15,6 +15,8 @@ Globals:
     Environment:
       Variables:
         HASHED_API_KEY: "c8b51b731a62386fd89d9598fb3508c2ff396b91282a888fad66bc615a4771ba"
+        PUBLIC_KEY_UUID_MAPPING: !Ref UuidAndPublicKeyMap
+        LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
 
 Resources:
   claimPublicKeyAndUuidFunction:
@@ -23,10 +25,7 @@ Resources:
       Handler: src/handlers/claimPublicKeyAndUuid.claimPublicKeyAndUuidHandler
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref UuidAndPublicKeyMap
-      Environment:
-        Variables:
-          PUBLIC_KEY_UUID_MAPPING: !Ref UuidAndPublicKeyMap
+            TableName: !Ref UuidAndPublicKeyMap          
       Events:
         Api:
           Type: Api
@@ -46,10 +45,7 @@ Resources:
       Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref LastKnownPositionsTable
-      Environment:
-        Variables:
-          LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
+            TableName: !Ref LastKnownPositionsTable      
       Events:
         Api:
           Type: Api
@@ -71,10 +67,6 @@ Resources:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
             TableName: !Ref LastKnownPositionsTable
-      Environment:
-        Variables:
-          # Make table name accessible as environment variable from function code during execution
-          LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
       Events:
         Api:
           Type: Api

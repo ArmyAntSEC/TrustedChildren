@@ -8,8 +8,7 @@ echo "\n------ Storing randomized event to local database directly.\n"
 aws dynamodb transact-write-items --transact-items file://./scripts/item.json --endpoint-url http://localhost:8000
 echo "\n------ Dumping local database content \n"
 aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localhost:8000
-echo "\n------ Building and then invoking local lambda to put event in database.\n"
-sam build
+echo "\n------ Invoking local lambda to put event in database.\n"
 sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
 echo "\n------ Invoking again. This should fail.\n"
 sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
