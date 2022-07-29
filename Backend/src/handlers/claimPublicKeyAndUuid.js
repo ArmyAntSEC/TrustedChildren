@@ -42,10 +42,5 @@ async function doClaimPublicKeyAndUuid(event) {
     ]
   };
 
-  try {
-    await docClient.transactWrite(params).promise();
-  } catch (err) {
-    console.error(err);
-    throw (err);
-  }
+  await docClient.transactWrite(params).promise();
 }

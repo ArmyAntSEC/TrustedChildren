@@ -32,10 +32,11 @@ exports.handlerWrapper = async function (event, handler) {
       return response(200, JSON.stringify(data))
     }
   } catch (exception) {
+    console.error(JSON.stringify(exception, ["message", "arguments", "type", "name"]));
+
     if (exception instanceof ErrorResponse) {
       return response(exception.statusCode, exception.body)
     } else {
-      console.error(JSON.stringify(exception, ["message", "arguments", "type", "name"]));
       return response(500, "Internal Server Error")
     }
   }
