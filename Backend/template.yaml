@@ -36,7 +36,7 @@ Resources:
   getPublicKeyFromUuidFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/getPublicKeyFromUuid.getPublicKeyFromUuidHandler
+      Handler: src/handlers/getPublicKeyFromUuid.handler
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref UuidAndPublicKeyMap          

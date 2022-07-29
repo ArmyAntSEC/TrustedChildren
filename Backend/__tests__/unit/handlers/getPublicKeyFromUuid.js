@@ -1,4 +1,4 @@
-const lambda = require('../../../src/handlers/getPublicKeyFromUuid.js');
+const getPublicKeyFromUuid = require('../../../src/handlers/getPublicKeyFromUuid.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
 describe('Test getPublicKeyFromUuid', () => {
@@ -39,7 +39,7 @@ describe('Test getPublicKeyFromUuid', () => {
       }
     }
 
-    const result = await lambda.getPublicKeyFromUuidHandler(event);
+    const result = await getPublicKeyFromUuid.handler(event);
 
     const expectedResult = {
       statusCode: 200,
