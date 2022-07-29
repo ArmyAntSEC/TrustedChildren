@@ -8,12 +8,9 @@ if (process.env.AWS_SAM_LOCAL) {
     const AWS = require("aws-sdk")
     options.endpoint = new AWS.Endpoint("http://host.docker.internal:8000");
     console.debug("Using local AWS endpoint.");
-} else {
-    console.debug("Using remote AWS endpoint.");
-}
+} 
 
 const docClient = new dynamodb.DocumentClient(options);
-console.debug("DocClient created.");
 
 const tableName = process.env.PUBLIC_KEY_UUID_MAPPING;
 
@@ -22,8 +19,6 @@ exports.claimPublicKeyAndUuidHandler = async (event) => {
 }
 
 async function doClaimPublicKeyAndUuid(event) {
-    console.debug("Claim core handler started. TableName: " + tableName );
-
 
     apiUtilities.verifyProperMethod(event, "POST");
 
@@ -60,12 +55,8 @@ async function doClaimPublicKeyAndUuid(event) {
     };
 
     try {
-        console.debug("Doing a put...");
-        console.debug( JSON.stringify(params) );
-        const response = await docClient.transactWrite(params).promise();
-        console.debug("Put succeeded: " + JSON.stringify(response));
-    } catch (err) {
-        console.error("Put failed");
+        await docClient.transactWrite(params).promise();        
+    } catch (err) {        
         console.error( err );
         throw (err);
     }

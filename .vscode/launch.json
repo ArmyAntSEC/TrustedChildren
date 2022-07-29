@@ -1,46 +1,11 @@
 {
-    "configurations": [        
-        {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "TrustedChildrenBackend:src/handlers/getByRecipientId.getByRecipientIdHandler (nodejs14.x)",
-            "invokeTarget": {
-                "target": "code",
-                "projectRoot": "${workspaceFolder}/",
-                "lambdaHandler": "src/handlers/getByRecipientId.getByRecipientIdHandler"
-            },
-            "lambda": {
-                "runtime": "nodejs14.x",
-                "payload": {},
-                "environmentVariables": {}
-            }
-        },
-        {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "API sam_test:HelloWorldFunction (nodejs14.x)",
-            "invokeTarget": {
-                "target": "api",
-                "templatePath": "${workspaceFolder}/template.yaml",
-                "logicalId": "HelloWorldFunction"
-            },
-            "api": {
-                "path": "/",
-                "httpMethod": "get",
-                "payload": {
-                    "json": {}
-                }
-            },
-            "lambda": {
-                "runtime": "nodejs14.x"
-            }
-        },
+    "configurations": [                
         {
             "type": "node",
             "request": "launch",
             "name": "Jest: current file",            
             "program": "${workspaceFolder}/Backend/node_modules/.bin/jest",
-            "args": ["${fileBasenameNoExtension}",  "--config", "Backend/package.json"],
+            "args": ["${fileBasenameNoExtension}",  "--config", "Backend/jest.config.js"],
             "console": "integratedTerminal",            
             "windows": {
               "program": "${workspaceFolder}/Backend/node_modules/jest/bin/jest"
