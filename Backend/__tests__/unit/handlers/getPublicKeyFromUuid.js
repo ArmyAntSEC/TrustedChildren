@@ -12,7 +12,7 @@ describe('Test getPublicKeyFromUuid', () => {
         getSpy.mockRestore();
     });
 
-    it('should get publicKey fora given uuid', async () => {
+    it('should get publicKey for a given uuid', async () => {
         const item = { publicKey: "publicKey" };
 
         getSpy.mockReturnValue({

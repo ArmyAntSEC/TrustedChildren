@@ -41,7 +41,7 @@ describe('Test claimPublicKeyAndUUID', function () {
 
         await doActualCallAndCheckReturn(sentItem);
 
-        const params1 = {
+        const expectedParams = {
             "TransactItems": [
                 {
                     'Put': {
@@ -69,7 +69,7 @@ describe('Test claimPublicKeyAndUUID', function () {
         };
 
         expect(putSpy).toHaveBeenCalledTimes(1);
-        expect(putSpy).toHaveBeenNthCalledWith(1, params1);
+        expect(putSpy).toHaveBeenNthCalledWith(1, expectedParams);
     });
 });
 
