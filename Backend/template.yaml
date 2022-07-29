@@ -33,12 +33,6 @@ Resources:
             Path: /devices
             Method: POST
 
-  claimPublicKeyAndUuidFunctionLog:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Join ['/', ['/aws/lambda', !Ref claimPublicKeyAndUuidFunction]]
-      RetentionInDays: 30
-
   getPublicKeyFromUuidFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -53,12 +47,6 @@ Resources:
             Path: /devices/{uuid}
             Method: GET
 
-  getPublicKeyFromUuidFunctionLog:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Join ['/', ['/aws/lambda', !Ref getPublicKeyFromUuidFunction]]
-      RetentionInDays: 30
-
   getByRecipientIdFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -72,12 +60,6 @@ Resources:
           Properties:
             Path: /{recipientID}
             Method: GET
-
-  GetByRecipientIdFunctionLog:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Join ['/', ['/aws/lambda', !Ref getByRecipientIdFunction]]
-      RetentionInDays: 30
 
   putItemsFunction:
     Type: AWS::Serverless::Function
@@ -96,12 +78,6 @@ Resources:
             # Auth:
             #   ApiKeyRequired: true
   
-  putItemsFunctionLog:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Join ['/', ['/aws/lambda', !Ref putItemsFunction]]
-      RetentionInDays: 30
-
   LastKnownPositionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
