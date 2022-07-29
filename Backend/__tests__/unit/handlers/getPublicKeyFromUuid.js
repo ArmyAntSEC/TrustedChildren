@@ -2,40 +2,50 @@ const lambda = require('../../../src/handlers/getPublicKeyFromUuid.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
 describe('Test getPublicKeyFromUuid', () => {
-    let getSpy;
+  let getSpy;
 
-    beforeAll(() => {
-        getSpy = jest.spyOn(dynamodb.DocumentClient.prototype, 'query');
-    });
+  beforeAll(() => {
+    getSpy = jest.spyOn(dynamodb.DocumentClient.prototype, 'query');
+  });
 
-    afterAll(() => {
-        getSpy.mockRestore();
-    });
+  afterAll(() => {
+    getSpy.mockRestore();
+  });
 
-    it('should get publicKey for a given uuid', async () => {
-        const item = { publicKey: "publicKey" };
-
-        getSpy.mockReturnValue({
-            promise: () => Promise.resolve(item)
-        });
-
-        const event = {
-            httpMethod: 'GET',
-            pathParameters: {
-                uuid: 'uuid'
-            },
-            headers: {
-                'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
-            }
+  it('should get publicKey for a given uuid', async () => {
+    const databaseItem = {
+      Items: [
+        {
+          SK: 'UUID#uuid123',
+          publicKey: 'publicKey123',
+          PK: 'UUID#uuid123'
         }
-        
-        const result = await lambda.getPublicKeyFromUuidHandler(event);
+      ],
+      Count: 1,
+      ScannedCount: 1
+    };
 
-        const expectedResult = {
-            statusCode: 200,
-            body: JSON.stringify(item)
-        };
-        
-        expect(result).toEqual(expectedResult);
+    getSpy.mockReturnValue({
+      promise: () => Promise.resolve(databaseItem)
     });
+
+    const event = {
+      httpMethod: 'GET',
+      pathParameters: {
+        uuid: 'uuid123'
+      },
+      headers: {
+        'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
+      }
+    }
+
+    const result = await lambda.getPublicKeyFromUuidHandler(event);
+
+    const expectedResult = {
+      statusCode: 200,
+      body: JSON.stringify({ publicKey: "publicKey123" })
+    };
+
+    expect(result).toEqual(expectedResult);
+  });
 });

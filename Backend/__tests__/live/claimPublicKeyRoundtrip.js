@@ -41,7 +41,7 @@ describe('Test public key and Uuid roundtrip', () => {
     const response2 = await axios(request2)
     console.log(response2.data);
     expect(response2.status).toEqual(200);
-    //expect(response2.data.publicKey).toEqual(publicKey);
+    expect(response2.data.publicKey).toEqual(publicKey);
   });
 
   it('should not claim a duplicate public key', async () => {

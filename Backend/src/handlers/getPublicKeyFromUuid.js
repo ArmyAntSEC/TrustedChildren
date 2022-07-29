@@ -29,5 +29,7 @@ async function doGetPublicKeyFromUuid(event) {
     }
   };
 
-  return docClient.query(params).promise();
+  const databaseResponse = await docClient.query(params).promise();
+  console.log(databaseResponse);
+  return { "publicKey": databaseResponse.Items[0].publicKey };
 }
