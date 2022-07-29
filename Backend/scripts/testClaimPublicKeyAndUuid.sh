@@ -9,9 +9,11 @@ aws dynamodb transact-write-items --transact-items file://./scripts/item.json --
 echo "\n------ Dumping local database content \n"
 aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localhost:8000
 echo "\n------ Invoking local lambda to put event in database.\n"
-sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
+sam local invoke claimPublicKeyAndUuidFunction -e events/claimPublicKeyAndUuid.json
 echo "\n------ Invoking again. This should fail.\n"
-sam local invoke claimPublicKeyAndUuidFunction -e events/eventClaimPublicKeyAndUuid.json
+sam local invoke claimPublicKeyAndUuidFunction -e events/claimPublicKeyAndUuid.json
 echo "\n------ The above should fail.\n"
 echo "\n------ Dumping local database again. 4 items should be there.\n"
 aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localhost:8000
+echo "\n------ Getting data via API.\n"
+sam local invoke getPublicKeyFromUuidFunction -e events/getPublicKeyFromUuid.json

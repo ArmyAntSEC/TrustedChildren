@@ -39,6 +39,26 @@ Resources:
       LogGroupName: !Join ['/', ['/aws/lambda', !Ref claimPublicKeyAndUuidFunction]]
       RetentionInDays: 30
 
+  getPublicKeyFromUuidFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/getPublicKeyFromUuid.getPublicKeyFromUuidHandler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UuidAndPublicKeyMap          
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /devices/{uuid}
+            Method: GET
+
+  getPublicKeyFromUuidFunctionLog:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join ['/', ['/aws/lambda', !Ref getPublicKeyFromUuidFunction]]
+      RetentionInDays: 30
+
   getByRecipientIdFunction:
     Type: AWS::Serverless::Function
     Properties:
