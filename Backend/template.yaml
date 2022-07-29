@@ -19,10 +19,10 @@ Globals:
         LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
 
 Resources:
-  claimPublicKeyAndUuidFunction:
+  postPublicKeyAndUuidFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/claimPublicKeyAndUuid.claimPublicKeyAndUuidHandler
+      Handler: src/handlers/postPublicKeyAndUuid.handler
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref UuidAndPublicKeyMap          

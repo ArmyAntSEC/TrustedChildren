@@ -1,10 +1,10 @@
 const apiUtilities = require("../utils/apiUtilities.js");
 
-exports.claimPublicKeyAndUuidHandler = async (event) => {
-  return apiUtilities.handlerWrapper(event, doClaimPublicKeyAndUuid);
+exports.handler = async (event) => {
+  return apiUtilities.handlerWrapper(event, implementation);
 }
 
-async function doClaimPublicKeyAndUuid(event) {
+async function implementation(event) {
 
   apiUtilities.verifyProperMethod(event, "POST");
 
