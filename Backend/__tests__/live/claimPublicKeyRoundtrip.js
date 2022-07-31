@@ -3,80 +3,55 @@ const { config } = require("aws-sdk");
 const axios = require("axios").default
 const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/devices/";
 
-function makePostRequest(publicKey, uuid) {
-
-  return {
-    url: baseURL,
-    method: "post",
-    headers: { "x-api-key": process.env.API_KEY },
-    data: {
-      "publicKey": publicKey,
-      "uuid": uuid
-    },
-    validateStatus: () => true
-  }
-}
-
-function makeGetRequest(uuid) {
-
-  return {
-    url: baseURL + uuid,
-    method: "get",
-    headers: { "x-api-key": process.env.API_KEY },
-    validateStatus: () => true
-  }
-}
-
 describe('Test public key and Uuid roundtrip', () => {
 
   it('should claim a public key and a uuid and then return it', async () => {
 
-    const publicKey = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
-    const uuid = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
+    const publicKey = createUniqueString("publicKey");
+    const uuid = createUniqueString("uuid");
 
-    const request1 = makePostRequest(publicKey, uuid);
-    const response1 = await axios(request1)
+    const response1 = await makePostRequestAndCall(publicKey, uuid);
     expect(response1.status).toEqual(204);
 
-    const request2 = makeGetRequest(uuid);
-    const response2 = await axios(request2)
+    const response2 = await makeGetRequestAndCall(uuid);
     expect(response2.status).toEqual(200);
     expect(response2.data.publicKey).toEqual(publicKey);
   });
 
   it('should not claim a duplicate public key', async () => {
 
-    const publicKey = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
-    const uuid1 = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
-    const uuid2 = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
+    const publicKey = createUniqueString("publicKey");
+    const uuid1 = createUniqueString("uuid");
+    const uuid2 = createUniqueString("uuid");
 
-    const request1 = makePostRequest(publicKey, uuid1);
-    const response1 = await axios(request1)
+    const response1 = await makePostRequestAndCall(publicKey, uuid1);
     expect(response1.status).toEqual(204);
 
-    const request2 = makePostRequest(publicKey, uuid2);
-    const response2 = await axios(request2)
+    const response2 = await makePostRequestAndCall(publicKey, uuid2);
     expect(response2.status).toEqual(500);
 
+    const response3 = await makeGetRequestAndCall(uuid1);
+    expect(response3.data.publicKey).toEqual(publicKey);
+
+    //const response4 = await makeGetRequestAndCall(uuid2);
+    //expect(response4.status).toEqual(404);
   });
 
   it('should not claim a duplicate uuid key', async () => {
 
-    const publicKey1 = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
-    const publicKey2 = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
-    const uuid = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
+    const publicKey1 = createUniqueString("publicKey");
+    const publicKey2 = createUniqueString("publicKey");
+    const uuid = createUniqueString("uuid");
 
-    const request1 = makePostRequest(publicKey1, uuid);
-    const response1 = await axios(request1)
+    const response1 = await makePostRequestAndCall(publicKey1, uuid);
     expect(response1.status).toEqual(204);
 
-    const request2 = makePostRequest(publicKey2, uuid);
-    const response2 = await axios(request2)
+    const response2 = await makePostRequestAndCall(publicKey2, uuid);
     expect(response2.status).toEqual(500);
 
   });
 
-  it('should not put with wrong API key', async () => {
+  it('should not post with wrong API key', async () => {
     const request1 = {
       url: baseURL,
       method: "post",
@@ -94,3 +69,42 @@ describe('Test public key and Uuid roundtrip', () => {
   })
 
 });
+
+
+function createUniqueString(prefix) {
+  return prefix + Math.floor(Math.random() * 1e8).toString();
+}
+
+async function makePostRequestAndCall(publicKey, uuid) {
+  const request = makePostRequest(publicKey, uuid);
+  return axios(request);
+}
+
+function makePostRequest(publicKey, uuid) {
+  return {
+    url: baseURL,
+    method: "post",
+    headers: { "x-api-key": process.env.API_KEY },
+    data: {
+      "publicKey": publicKey,
+      "uuid": uuid
+    },
+    validateStatus: () => true
+  }
+
+}
+
+async function makeGetRequestAndCall(uuid) {
+  const request = makeGetRequest(uuid);
+  return axios(request);
+}
+
+function makeGetRequest(uuid) {
+
+  return {
+    url: baseURL + uuid,
+    method: "get",
+    headers: { "x-api-key": process.env.API_KEY },
+    validateStatus: () => true
+  }
+}
