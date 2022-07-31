@@ -30,6 +30,7 @@ function makeGetRequest(uuid) {
 describe('Test public key and Uuid roundtrip', () => {
 
   it('should claim a public key and a uuid and then return it', async () => {
+
     const publicKey = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
     const uuid = "TestSenderID" + Math.floor(Math.random() * 1e8).toString();
 
@@ -39,7 +40,6 @@ describe('Test public key and Uuid roundtrip', () => {
 
     const request2 = makeGetRequest(uuid);
     const response2 = await axios(request2)
-    console.log(response2.data);
     expect(response2.status).toEqual(200);
     expect(response2.data.publicKey).toEqual(publicKey);
   });
