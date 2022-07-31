@@ -33,8 +33,8 @@ describe('Test public key and Uuid roundtrip', () => {
     const response3 = await makeGetRequestAndCall(uuid1);
     expect(response3.data.publicKey).toEqual(publicKey);
 
-    //const response4 = await makeGetRequestAndCall(uuid2);
-    //expect(response4.status).toEqual(404);
+    const response4 = await makeGetRequestAndCall(uuid2);
+    expect(response4.status).toEqual(404);
   });
 
   it('should not claim a duplicate uuid key', async () => {
@@ -49,6 +49,9 @@ describe('Test public key and Uuid roundtrip', () => {
     const response2 = await makePostRequestAndCall(publicKey2, uuid);
     expect(response2.status).toEqual(500);
 
+    const response3 = await makeGetRequestAndCall(uuid);
+    expect(response3.data.publicKey).toEqual(publicKey1);
+
   });
 
   it('should not post with wrong API key', async () => {
@@ -56,11 +59,7 @@ describe('Test public key and Uuid roundtrip', () => {
       url: baseURL,
       method: "post",
       headers: { "x-api-key": "Bad key" },
-      data: {
-        "recipientID": "Does",
-        "senderID": "Not",
-        "data": "matter"
-      },
+      data: "Does not matter",
       validateStatus: () => true
     }
     const response1 = await axios(request1)

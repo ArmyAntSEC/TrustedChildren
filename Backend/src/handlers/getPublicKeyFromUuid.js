@@ -1,5 +1,6 @@
 const apiUtilities = require('../utils/apiUtilities.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
+const { ErrorResponse } = require('../utils/ErrorResponse.js');
 
 exports.handler = async (event) => {
   return apiUtilities.handlerWrapper(event, implementation);
@@ -21,5 +22,10 @@ async function implementation(event) {
   };
 
   const databaseResponse = await docClient.query(params).promise();
-  return { "publicKey": databaseResponse.Items[0].publicKey };
+  console.log(JSON.stringify(databaseResponse));
+  if (databaseResponse.Count == 0) {
+    throw new ErrorResponse(404, "No such UUID found");
+  } else {
+    return { "publicKey": databaseResponse.Items[0].publicKey };
+  }
 }

@@ -17,4 +17,6 @@ echo "\n------ Dumping local database again. 4 items should be there.\n"
 aws dynamodb scan --table-name UuidAndPublicKeyMap --endpoint-url http://localhost:8000
 echo "\n------ Getting data via API.\n"
 sam local invoke getPublicKeyFromUuidFunction -e events/getPublicKeyFromUuid.json
+echo "\n------ Getting data for nonexistent uuid via API.\n"
+sam local invoke getPublicKeyFromUuidFunction -e events/getPublicKeyFromNonexistentUuid.json
 echo "\n------ Done with local testing.\n"

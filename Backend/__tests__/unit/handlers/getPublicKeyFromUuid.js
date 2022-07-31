@@ -48,4 +48,36 @@ describe('Test getPublicKeyFromUuid', () => {
 
     expect(result).toEqual(expectedResult);
   });
+
+  it('should get return a 404 for nonexistent uuid', async () => {
+    const databaseItem = {
+      Items: [
+      ],
+      Count: 0,
+      ScannedCount: 0
+    };
+
+    getSpy.mockReturnValue({
+      promise: () => Promise.resolve(databaseItem)
+    });
+
+    const event = {
+      httpMethod: 'GET',
+      pathParameters: {
+        uuid: 'uuid123'
+      },
+      headers: {
+        'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
+      }
+    }
+
+    const result = await getPublicKeyFromUuid.handler(event);
+
+    const expectedResult = {
+      statusCode: 404,
+      body: "No such UUID found"
+    };
+
+    expect(result).toEqual(expectedResult);
+  });
 });
