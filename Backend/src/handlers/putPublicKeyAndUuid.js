@@ -6,7 +6,7 @@ exports.handler = async (event) => {
 
 async function implementation(event) {
 
-  apiUtilities.verifyProperMethod(event, "POST");
+  apiUtilities.verifyProperMethod(event, "PUT");
 
   const body = JSON.parse(event.body);
 

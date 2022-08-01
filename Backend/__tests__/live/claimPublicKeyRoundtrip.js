@@ -10,7 +10,7 @@ describe('Test public key and Uuid roundtrip', () => {
     const publicKey = createUniqueString("publicKey");
     const uuid = createUniqueString("uuid");
 
-    const response1 = await makePostRequestAndCall(publicKey, uuid);
+    const response1 = await makePutRequestAndCall(publicKey, uuid);
     expect(response1.status).toEqual(204);
 
     const response2 = await makeGetRequestAndCall(uuid);
@@ -24,10 +24,10 @@ describe('Test public key and Uuid roundtrip', () => {
     const uuid1 = createUniqueString("uuid");
     const uuid2 = createUniqueString("uuid");
 
-    const response1 = await makePostRequestAndCall(publicKey, uuid1);
+    const response1 = await makePutRequestAndCall(publicKey, uuid1);
     expect(response1.status).toEqual(204);
 
-    const response2 = await makePostRequestAndCall(publicKey, uuid2);
+    const response2 = await makePutRequestAndCall(publicKey, uuid2);
     expect(response2.status).toEqual(500);
 
     const response3 = await makeGetRequestAndCall(uuid1);
@@ -43,10 +43,10 @@ describe('Test public key and Uuid roundtrip', () => {
     const publicKey2 = createUniqueString("publicKey");
     const uuid = createUniqueString("uuid");
 
-    const response1 = await makePostRequestAndCall(publicKey1, uuid);
+    const response1 = await makePutRequestAndCall(publicKey1, uuid);
     expect(response1.status).toEqual(204);
 
-    const response2 = await makePostRequestAndCall(publicKey2, uuid);
+    const response2 = await makePutRequestAndCall(publicKey2, uuid);
     expect(response2.status).toEqual(500);
 
     const response3 = await makeGetRequestAndCall(uuid);
@@ -74,15 +74,15 @@ function createUniqueString(prefix) {
   return prefix + Math.floor(Math.random() * 1e8).toString();
 }
 
-async function makePostRequestAndCall(publicKey, uuid) {
-  const request = makePostRequest(publicKey, uuid);
+async function makePutRequestAndCall(publicKey, uuid) {
+  const request = makePutRequest(publicKey, uuid);
   return axios(request);
 }
 
-function makePostRequest(publicKey, uuid) {
+function makePutRequest(publicKey, uuid) {
   return {
     url: baseURL,
-    method: "post",
+    method: "put",
     headers: { "x-api-key": process.env.API_KEY },
     data: {
       "publicKey": publicKey,

@@ -1,4 +1,4 @@
-const postPublicKeyAndUuid = require('../../../src/handlers/postPublicKeyAndUuid.js');
+const postPublicKeyAndUuid = require('../../../src/handlers/putPublicKeyAndUuid.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
 
 describe('Test claimPublicKeyAndUUID', function () {
@@ -6,7 +6,7 @@ describe('Test claimPublicKeyAndUUID', function () {
 
   const doActualCallAndCheckReturn = async function (sentItem) {
     const event = {
-      httpMethod: 'POST',
+      httpMethod: 'PUT',
       body: JSON.stringify(sentItem),
       headers: {
         'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"

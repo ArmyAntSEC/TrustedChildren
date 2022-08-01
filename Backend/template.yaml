@@ -19,10 +19,10 @@ Globals:
         LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
 
 Resources:
-  postPublicKeyAndUuidFunction:
+  putPublicKeyAndUuidFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/postPublicKeyAndUuid.handler
+      Handler: src/handlers/putPublicKeyAndUuid.handler
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref UuidAndPublicKeyMap          
@@ -31,7 +31,7 @@ Resources:
           Type: Api
           Properties:
             Path: /devices
-            Method: POST
+            Method: PUT
 
   getPublicKeyFromUuidFunction:
     Type: AWS::Serverless::Function
@@ -47,20 +47,6 @@ Resources:
             Path: /devices/{uuid}
             Method: GET
 
-  getByRecipientIdFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref LastKnownPositionsTable      
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /{recipientID}
-            Method: GET
-
   putLastKnownPosition:
     Type: AWS::Serverless::Function
     Properties:
@@ -74,6 +60,20 @@ Resources:
           Properties:
             Path: /
             Method: PUT            
+
+  getByRecipientIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref LastKnownPositionsTable      
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{recipientID}
+            Method: GET
   
   LastKnownPositionsTable:
     Type: AWS::DynamoDB::Table

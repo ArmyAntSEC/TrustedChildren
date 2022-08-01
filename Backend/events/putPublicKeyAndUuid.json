@@ -1,5 +1,5 @@
 {
-    "httpMethod": "POST",    
+    "httpMethod": "PUT",    
     "headers": {
         "x-api-key": "N5MlYSArpX7ZPMx8wfb4P9s7N7Fg4xP98XYXGCmr"
     },

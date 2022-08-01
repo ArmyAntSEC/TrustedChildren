@@ -17,7 +17,7 @@ exports.createDocClient = function () {
 
 exports.verifyProperMethod = function (event, method) {
   if (event.httpMethod !== method) {
-    throw new ErrorResponse(405, "Method not allowed");
+    throw new ErrorResponse(405, "Method not allowed. Expected: " + method + " Received: " + event.httpMethod);
   }
 }
 
