@@ -61,12 +61,11 @@ Resources:
             Path: /{recipientID}
             Method: GET
 
-  putItemsFunction:
+  putLastKnownPosition:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/putItems.putItemsHandler
-      Policies:
-        # Give Create/Read/Update/Delete Permissions to the SampleTable
+      Handler: src/handlers/putLastKnownPosition.handler
+      Policies:        
         - DynamoDBCrudPolicy:
             TableName: !Ref LastKnownPositionsTable
       Events:
@@ -74,9 +73,7 @@ Resources:
           Type: Api
           Properties:
             Path: /
-            Method: POST
-            # Auth:
-            #   ApiKeyRequired: true
+            Method: PUT            
   
   LastKnownPositionsTable:
     Type: AWS::DynamoDB::Table
