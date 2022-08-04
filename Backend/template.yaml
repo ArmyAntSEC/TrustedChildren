@@ -72,7 +72,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /{recipientID}
+            Path: /{recipientId}
             Method: GET
   
   LastKnownPositionsTable:
