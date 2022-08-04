@@ -61,10 +61,10 @@ Resources:
             Path: /
             Method: PUT            
 
-  getByRecipientIdFunction:
+  getLastKnownPositionFromRecipientId:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/getByRecipientId.getByRecipientIdHandler
+      Handler: src/handlers/getLastKnownPositionFromRecipientId.handler
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref LastKnownPositionsTable      
@@ -80,14 +80,14 @@ Resources:
     Properties:
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
-        - AttributeName: recipientID
+        - AttributeName: recipientId
           AttributeType: S
-        - AttributeName: senderID
+        - AttributeName: senderId
           AttributeType: S
       KeySchema:
-        - AttributeName: recipientID
+        - AttributeName: recipientId
           KeyType: HASH
-        - AttributeName: senderID
+        - AttributeName: senderId
           KeyType: RANGE
 
   UuidAndPublicKeyMap:

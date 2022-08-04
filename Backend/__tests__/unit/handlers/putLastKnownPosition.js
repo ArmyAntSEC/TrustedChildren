@@ -21,7 +21,7 @@ describe('Test putItemsHandler', function () {
     const sentItem = {
       senderID: 'id2',
       messages: [{
-        recipientID: 'id1',
+        recipientId: 'id1',
         data: 'data'
       }]
     };
@@ -31,8 +31,8 @@ describe('Test putItemsHandler', function () {
     const params1 = {
       TableName: undefined,
       Item: {
-        senderID: sentItem.senderID,
-        recipientID: sentItem.messages[0].recipientID,
+        senderId: sentItem.senderId,
+        recipientId: sentItem.messages[0].recipientId,
         data: sentItem.messages[0].data
       }
     };
@@ -45,10 +45,10 @@ describe('Test putItemsHandler', function () {
     const sentItem = {
       senderID: 'id2',
       messages: [{
-        recipientID: 'id1',
+        recipientId: 'id1',
         data: 'data'
       }, {
-        recipientID: 'id3',
+        recipientId: 'id3',
         data: 'more data'
       }]
     };
@@ -58,8 +58,8 @@ describe('Test putItemsHandler', function () {
     const params1 = {
       TableName: undefined,
       Item: {
-        senderID: sentItem.senderID,
-        recipientID: sentItem.messages[0].recipientID,
+        senderId: sentItem.senderId,
+        recipientId: sentItem.messages[0].recipientId,
         data: sentItem.messages[0].data
       }
     };
@@ -67,8 +67,8 @@ describe('Test putItemsHandler', function () {
     const params2 = {
       TableName: undefined,
       Item: {
-        senderID: sentItem.senderID,
-        recipientID: sentItem.messages[1].recipientID,
+        senderId: sentItem.senderId,
+        recipientId: sentItem.messages[1].recipientId,
         data: sentItem.messages[1].data
       }
     };

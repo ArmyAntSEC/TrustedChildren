@@ -14,19 +14,20 @@ async function implementation(event) {
 
   const body = JSON.parse(event.body);
 
-  const senderID = body.senderID;
+  const senderId = body.senderId;
 
   for (const message of body.messages) {
-    const recipientID = message.recipientID;
+    const recipientId = message.recipientId;
     const data = message.data;
 
     const params = {
       TableName: tableName,
       Item: {
-        recipientID: recipientID, senderID: senderID, data: data
+        recipientId: recipientId, senderId: senderId, data: data
       }
     };
 
+    console.log(params);
     await docClient.put(params).promise();
 
   }

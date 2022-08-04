@@ -37,7 +37,7 @@ exports.handlerWrapper = async function (event, handler) {
     if (exception instanceof ErrorResponse) {
       return response(exception.statusCode, exception.body)
     } else {
-      return response(500, "Internal Server Error")
+      return response(500, "Cought internal error: " + exception.message)
     }
   }
 }

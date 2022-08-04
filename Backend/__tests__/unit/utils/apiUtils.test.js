@@ -58,13 +58,13 @@ describe('Test verifyProperMethod', function () {
 
     it('should respond properly on unxpected failure', async () => {
       process.env.HASHED_API_KEY = "ba2ef371838b7644589abb2e43876a11670891758a4cdd801225490d17e7f870";
-      const handler = function (_event) { throw new Error("Error") }
+      const handler = function (_event) { throw new Error("Specific Error") }
       const event = { headers: { 'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD" } };
 
       const response = await apiUtils.handlerWrapper(event, handler);
 
       expect(response.statusCode).toEqual(500);
-      expect(response.body).toEqual("Internal Server Error");
+      expect(response.body).toEqual("Cought internal error: Specific Error");
     });
 
     it('should respond properly on bad API Key', async () => {
