@@ -88,7 +88,7 @@ const doActualCallAndCheckReturn = async function (sentItem) {
     httpMethod: 'PUT',
     body: JSON.stringify(sentItem),
     headers: {
-      'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
+      'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
     }
   };
 

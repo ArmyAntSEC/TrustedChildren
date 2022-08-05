@@ -35,7 +35,7 @@ describe('Test getPublicKeyFromUuid', () => {
         uuid: 'uuid123'
       },
       headers: {
-        'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
+        'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
       }
     }
 
@@ -67,7 +67,7 @@ describe('Test getPublicKeyFromUuid', () => {
         uuid: 'uuid123'
       },
       headers: {
-        'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
+        'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
       }
     }
 

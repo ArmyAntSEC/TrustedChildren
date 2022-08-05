@@ -17,7 +17,7 @@ describe('Test roundtrip', () => {
     const request1 = {
       url: baseURL,
       method: "put",
-      headers: { "x-api-key": process.env.API_KEY },
+      headers: { "X-Api-Key": process.env.API_KEY },
       data: {
         "senderId": senderId,
         "messages": [{
@@ -38,7 +38,7 @@ describe('Test roundtrip', () => {
     const request2 = {
       url: baseURL,
       method: "put",
-      headers: { "x-api-key": process.env.API_KEY },
+      headers: { "X-Api-Key": process.env.API_KEY },
       data: {
         "senderId": senderId2,
         "messages": [{
@@ -57,7 +57,7 @@ describe('Test roundtrip', () => {
     const request3 = {
       url: baseURL + recipientId,
       method: "get",
-      headers: { "x-api-key": process.env.API_KEY },
+      headers: { "X-Api-Key": process.env.API_KEY },
       validateStatus: () => true
     }
 
@@ -73,7 +73,7 @@ describe('Test roundtrip', () => {
     const request4 = {
       url: baseURL + recipientId2,
       method: "get",
-      headers: { "x-api-key": process.env.API_KEY },
+      headers: { "X-Api-Key": process.env.API_KEY },
       validateStatus: () => true
     }
     const response4 = await axios(request4)
@@ -88,7 +88,7 @@ describe('Test roundtrip', () => {
     const request1 = {
       url: baseURL,
       method: "put",
-      headers: { "x-api-key": "Bad key" },
+      headers: { "X-Api-Key": "Bad key" },
       data: "Does not matter",
       validateStatus: () => true
     }

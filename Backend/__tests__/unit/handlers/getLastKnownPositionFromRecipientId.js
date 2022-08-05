@@ -32,7 +32,7 @@ describe('Test getByRecipientIdHandler', () => {
         recipientId: 'id1'
       },
       headers: {
-        'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
+        'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
       }
     }
 

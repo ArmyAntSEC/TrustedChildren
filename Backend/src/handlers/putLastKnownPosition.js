@@ -1,8 +1,4 @@
 const apiUtilities = require('../utils/apiUtilities.js');
-const dynamodb = require('aws-sdk/clients/dynamodb');
-const docClient = new dynamodb.DocumentClient();
-
-
 const tableName = process.env.LAST_KNOWN_POSITIONS_TABLE;
 
 exports.handler = async (event) => {
@@ -28,6 +24,7 @@ async function implementation(event) {
     };
 
     console.log(params);
+    const docClient = apiUtilities.createDocClient();
     await docClient.put(params).promise();
 
   }

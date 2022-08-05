@@ -58,7 +58,7 @@ describe('Test public key and Uuid roundtrip', () => {
     const request1 = {
       url: baseURL,
       method: "post",
-      headers: { "x-api-key": "Bad key" },
+      headers: { "X-Api-Key": "Bad key" },
       data: "Does not matter",
       validateStatus: () => true
     }
@@ -83,7 +83,7 @@ function makePutRequest(publicKey, uuid) {
   return {
     url: baseURL,
     method: "put",
-    headers: { "x-api-key": process.env.API_KEY },
+    headers: { "X-Api-Key": process.env.API_KEY },
     data: {
       "publicKey": publicKey,
       "uuid": uuid
@@ -103,7 +103,7 @@ function makeGetRequest(uuid) {
   return {
     url: baseURL + uuid,
     method: "get",
-    headers: { "x-api-key": process.env.API_KEY },
+    headers: { "X-Api-Key": process.env.API_KEY },
     validateStatus: () => true
   }
 }

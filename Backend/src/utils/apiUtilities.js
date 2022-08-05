@@ -24,8 +24,8 @@ exports.verifyProperMethod = function (event, method) {
 exports.handlerWrapper = async function (event, handler) {
   try {
     verifyStandardKey(event);
-
     const data = await handler(event);
+
     if (data === null || data === undefined) {
       return response(204, "");
     } else {
