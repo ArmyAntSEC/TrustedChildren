@@ -1,5 +1,6 @@
 #!/bin/sh
 docker-compose up &
+sam local start-api &
 
 yarn test --coverage __tests__/unit/ --silent  && \
 sam validate && \
