@@ -46,7 +46,7 @@ jobs:
       - run: sam build --use-container
 
 # sam deploy
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-hello-world --s3-bucket sam-github-deployment --capabilities CAPABILITY_IAM --region eu-west-1
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-trusted-children --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-14n03t9zqny4u --capabilities CAPABILITY_IAM --region eu-west-1
 
   post-release-tests:
       runs-on: ubuntu-latest
@@ -56,6 +56,6 @@ jobs:
           working-directory: ./Backend
       steps:
         - uses: actions/checkout@v2      
-        - run: echo "{\"API_KEY\":\"${{ secrets.API_KEY }}\"}" > __tests__/live/config.json
+        - run : echo "process.env.API_KEY = \"${{ secrets.API_KEY }}\";" > __tests/live/config.shared.js        
         - run: yarn
         - run: yarn test -- __tests__/live/

@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >-
-  Trusted Children 0.2
+  Trusted Children Backend
 
 Transform: AWS::Serverless-2016-10-31
 
