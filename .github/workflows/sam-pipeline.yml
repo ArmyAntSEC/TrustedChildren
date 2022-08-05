@@ -58,4 +58,4 @@ jobs:
         - uses: actions/checkout@v2      
         - run : echo "process.env.API_KEY = \"${{ secrets.API_KEY }}\";" > __tests/live/config.shared.js        
         - run: yarn
-        - run: yarn test -- __tests__/live/
+        - run: yarn test -- __tests__/live/  --config=__tests__/config/jest.server.config.js
