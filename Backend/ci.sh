@@ -11,4 +11,3 @@ yarn test __tests__/live/ --config=__tests__/config/jest.local.config.js && \
 sam deploy --no-fail-on-empty-changeset && \
 yarn test __tests__/live/ --config=__tests__/config/jest.server.config.js
 
-
