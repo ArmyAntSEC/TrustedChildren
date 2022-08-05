@@ -1,5 +1,6 @@
 const putLastKnownPosition = require('../../../src/handlers/putLastKnownPosition.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
+const utils = require("../utils.js");
 
 // This includes all tests for putItemHandler() 
 describe('Test putItemsHandler', function () {
@@ -87,9 +88,7 @@ const doActualCallAndCheckReturn = async function (sentItem) {
   const event = {
     httpMethod: 'PUT',
     body: JSON.stringify(sentItem),
-    headers: {
-      'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
-    }
+    headers: utils.getStandardHeaders()
   };
 
   const result = await putLastKnownPosition.handler(event);

@@ -1,5 +1,6 @@
 const postPublicKeyAndUuid = require('../../../src/handlers/putPublicKeyAndUuid.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
+const utils = require("../utils.js");
 
 describe('Test claimPublicKeyAndUUID', function () {
   let putSpy;
@@ -8,9 +9,7 @@ describe('Test claimPublicKeyAndUUID', function () {
     const event = {
       httpMethod: 'PUT',
       body: JSON.stringify(sentItem),
-      headers: {
-        'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
-      }
+      headers: utils.getStandardHeaders()
     };
 
     const result = await postPublicKeyAndUuid.handler(event);

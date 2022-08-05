@@ -1,5 +1,6 @@
 const getPublicKeyFromUuid = require('../../../src/handlers/getPublicKeyFromUuid.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
+const utils = require("../utils.js");
 
 describe('Test getPublicKeyFromUuid', () => {
   let getSpy;
@@ -34,9 +35,7 @@ describe('Test getPublicKeyFromUuid', () => {
       pathParameters: {
         uuid: 'uuid123'
       },
-      headers: {
-        'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
-      }
+      headers: utils.getStandardHeaders()
     }
 
     const result = await getPublicKeyFromUuid.handler(event);
@@ -66,9 +65,7 @@ describe('Test getPublicKeyFromUuid', () => {
       pathParameters: {
         uuid: 'uuid123'
       },
-      headers: {
-        'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
-      }
+      headers: utils.getStandardHeaders()
     }
 
     const result = await getPublicKeyFromUuid.handler(event);

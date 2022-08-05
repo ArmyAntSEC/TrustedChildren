@@ -1,5 +1,6 @@
 const getLastKnownPositionFromRecipientId = require('../../../src/handlers/getLastKnownPositionFromRecipientId.js');
 const dynamodb = require('aws-sdk/clients/dynamodb');
+const utils = require("../utils.js");
 
 describe('Test getByRecipientIdHandler', () => {
   let getSpy;
@@ -31,9 +32,7 @@ describe('Test getByRecipientIdHandler', () => {
       pathParameters: {
         recipientId: 'id1'
       },
-      headers: {
-        'X-Api-Key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
-      }
+      headers: utils.getStandardHeaders()
     }
 
     // Invoke getByIdHandler() 
@@ -57,6 +56,38 @@ describe('Test getByRecipientIdHandler', () => {
     };
 
     // Compare the result with the expected result 
+    expect(result).toEqual(expectedResult);
+  });
+
+  it('should handle when there is no data in db', async () => {
+
+    getSpy.mockReturnValue({
+      promise: () => Promise.resolve(
+        {
+          Items: [],
+          Count: 0,
+          ScannedCount: 0
+        })
+    });
+
+    const event = {
+      httpMethod: 'GET',
+      pathParameters: {
+        recipientId: 'id1'
+      },
+      headers: utils.getStandardHeaders()
+    }
+
+    const result = await getLastKnownPositionFromRecipientId.handler(event);
+
+    const expectedResult = {
+      statusCode: 200,
+      body: JSON.stringify({
+        "recipientId": "id1",
+        "lastKnownPositions": []
+      })
+    };
+
     expect(result).toEqual(expectedResult);
   });
 
