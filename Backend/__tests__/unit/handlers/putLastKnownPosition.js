@@ -18,7 +18,7 @@ describe('Test putItemsHandler', function () {
     putSpy.mockRestore();
   });
 
-  it('should add a single id to the table', async () => {
+  it('should add a single item to the table', async () => {
     const sentItem = {
       senderID: 'id2',
       messages: [{
@@ -42,7 +42,7 @@ describe('Test putItemsHandler', function () {
     expect(putSpy).toHaveBeenNthCalledWith(1, params1);
   });
 
-  it('should add two ids to the table', async () => {
+  it('should add two different items to the table', async () => {
     const sentItem = {
       senderID: 'id2',
       messages: [{
