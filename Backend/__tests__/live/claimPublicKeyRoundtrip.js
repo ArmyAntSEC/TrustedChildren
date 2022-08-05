@@ -1,7 +1,7 @@
 const { config } = require("aws-sdk");
 
 const axios = require("axios").default
-const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/devices/";
+const baseURL = process.env.BASE_URL + "devices/";
 
 
 describe('Test public key and Uuid roundtrip', () => {
@@ -58,7 +58,7 @@ describe('Test public key and Uuid roundtrip', () => {
   it('should not post with wrong API key', async () => {
     const request1 = {
       url: baseURL,
-      method: "post",
+      method: "PUT",
       headers: { "X-Api-Key": "Bad key" },
       data: "Does not matter",
       validateStatus: () => true
@@ -83,7 +83,7 @@ async function makePutRequestAndCall(publicKey, uuid) {
 function makePutRequest(publicKey, uuid) {
   return {
     url: baseURL,
-    method: "put",
+    method: "PUT",
     headers: { "X-Api-Key": process.env.API_KEY },
     data: {
       "publicKey": publicKey,

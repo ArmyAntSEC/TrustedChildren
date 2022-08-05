@@ -1,7 +1,7 @@
 const { config } = require("aws-sdk");
 
 const axios = require("axios").default
-const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/";
+const baseURL = process.env.BASE_URL;
 
 describe('Test roundtrip', () => {
 
@@ -49,10 +49,8 @@ describe('Test roundtrip', () => {
       validateStatus: () => true
     }
 
-
     const response2 = await axios(request2)
     expect(response2.status).toEqual(204);
-
 
     const request3 = {
       url: baseURL + recipientId,

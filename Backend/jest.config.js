@@ -1,5 +1,4 @@
 module.exports = {
-  "rootDir": "../../",
   "setupFiles": ['<rootDir>/__tests__/config/config.shared.js'],
   "coverageThreshold": {
     "global": {

@@ -11,6 +11,7 @@ async function implementation(event) {
   const body = JSON.parse(event.body);
 
   const senderId = body.senderId;
+  console.log("Messages: " + JSON.stringify(body.messages, null, 2));
 
   for (const message of body.messages) {
     const recipientId = message.recipientId;
@@ -23,7 +24,9 @@ async function implementation(event) {
       }
     };
 
-    console.log(params);
+
+    console.log("Param: " + JSON.stringify(params, null, 2));
+
     const docClient = apiUtilities.createDocClient();
     await docClient.put(params).promise();
 
