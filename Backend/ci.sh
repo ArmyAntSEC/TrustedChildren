@@ -1,7 +1,7 @@
 #!/bin/sh
 docker-compose up &
 
-yarn test --coverage __tests__/unit/ --silent && \
+yarn test --coverage __tests__/unit/ --silent --config=__tests__/config/jest.unit.config.js && \
 sam validate && \
 sam build && \
 #./scripts/testClaimPublicKeyAndUuid.sh && \

@@ -3,6 +3,7 @@ const { config } = require("aws-sdk");
 const axios = require("axios").default
 const baseURL = "https://seqfwj19u3.execute-api.eu-west-1.amazonaws.com/Prod/devices/";
 
+
 describe('Test public key and Uuid roundtrip', () => {
 
   it('should claim a public key and a uuid and then return it', async () => {
