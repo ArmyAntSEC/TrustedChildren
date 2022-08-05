@@ -19,6 +19,19 @@ Globals:
         LAST_KNOWN_POSITIONS_TABLE: !Ref LastKnownPositionsTable
 
 Resources:
+  helloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/helloWorld.handler
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: GET
+            Auth:
+              ApiKeyRequired: true
+
   putPublicKeyAndUuidFunction:
     Type: AWS::Serverless::Function
     Properties:

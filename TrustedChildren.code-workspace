@@ -4,5 +4,38 @@
       "path": "."
     }
   ],
-  "settings": {}
+  "settings": {},
+  "launch": {
+    "configurations": [
+      {
+        "type": "aws-sam",
+        "request": "direct-invoke",
+        "name": "Backend:putPublicKeyAndUuidFunction",
+        "invokeTarget": {
+          "target": "template",
+          "templatePath": "${workspaceFolder}/Backend/template.yaml",
+          "logicalId": "putPublicKeyAndUuidFunction"
+        },
+        "lambda": {
+          "payload": {},
+          "environmentVariables": {}
+        }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Jest: current file",
+        "program": "${workspaceFolder}/Backend/node_modules/.bin/jest",
+        "args": [
+          "${fileBasenameNoExtension}",
+          "--config",
+          "Backend/jest.config.js"
+        ],
+        "console": "integratedTerminal",
+        "windows": {
+          "program": "${workspaceFolder}/Backend/node_modules/jest/bin/jest"
+        }
+      }
+    ]
+  }
 }
