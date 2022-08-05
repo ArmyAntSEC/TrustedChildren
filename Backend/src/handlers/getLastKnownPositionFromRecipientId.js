@@ -22,5 +22,18 @@ async function implementation(event) {
     }
   };
 
-  return docClient.query(params).promise();
+  const databaseResponse = await docClient.query(params).promise();
+
+  return {
+    "recipientId": recipientId,
+    "lastKnownPositions": databaseResponse.Items.map(transformDatabaseItem)
+  }
+
+}
+
+function transformDatabaseItem(item) {
+  return {
+    "senderId": item.senderId,
+    "data": item.data
+  }
 }

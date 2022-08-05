@@ -51,7 +51,6 @@ describe('Test roundtrip', () => {
 
 
     const response2 = await axios(request2)
-    console.log(JSON.stringify(response2.data));
     expect(response2.status).toEqual(204);
 
 
@@ -64,13 +63,12 @@ describe('Test roundtrip', () => {
 
     const response3 = await axios(request3)
     expect(response3.status).toEqual(200);
-    expect(response3.data.Count).toEqual(2);
-    expect(response3.data.Items[0].recipientId).toEqual(recipientId);
-    expect(response3.data.Items[0].senderId).toEqual(senderId);
-    expect(response3.data.Items[0].data).toEqual(data);
-    expect(response3.data.Items[1].recipientId).toEqual(recipientId);
-    expect(response3.data.Items[1].senderId).toEqual(senderId2);
-    expect(response3.data.Items[1].data).toEqual(data3);
+    expect(response3.data.recipientId).toEqual(recipientId);
+    expect(response3.data.lastKnownPositions[0].senderId).toEqual(senderId);
+    expect(response3.data.lastKnownPositions[0].data).toEqual(data);
+    expect(response3.data.lastKnownPositions[1].senderId).toEqual(senderId2);
+    expect(response3.data.lastKnownPositions[1].data).toEqual(data3);
+    expect(response3.data.lastKnownPositions.length).toEqual(2);
 
     const request4 = {
       url: baseURL + recipientId2,
@@ -80,10 +78,10 @@ describe('Test roundtrip', () => {
     }
     const response4 = await axios(request4)
     expect(response4.status).toEqual(200);
-    expect(response4.data.Count).toEqual(1);
-    expect(response4.data.Items[0].recipientId).toEqual(recipientId2);
-    expect(response4.data.Items[0].senderId).toEqual(senderId);
-    expect(response4.data.Items[0].data).toEqual(data2);
+    expect(response4.data.recipientId).toEqual(recipientId2);
+    expect(response4.data.lastKnownPositions[0].senderId).toEqual(senderId);
+    expect(response4.data.lastKnownPositions[0].data).toEqual(data2);
+    expect(response4.data.lastKnownPositions.length).toEqual(1);
   });
 
   it('should not put with wrong API key', async () => {

@@ -13,19 +13,23 @@ describe('Test getByRecipientIdHandler', () => {
   });
 
   it('should get item by id', async () => {
-    const item = [
-      { recipientID: 'id1', senderID: 'id2', data: 'data' },
-      { recipientID: 'id1', senderID: 'id3', data: 'data2' }
-    ];
 
     getSpy.mockReturnValue({
-      promise: () => Promise.resolve(item)
+      promise: () => Promise.resolve(
+        {
+          Items: [
+            { recipientId: 'id1', senderId: 'id2', data: 'data' },
+            { recipientId: 'id1', senderId: 'id3', data: 'data2' }
+          ],
+          Count: 2,
+          ScannedCount: 2
+        })
     });
 
     const event = {
       httpMethod: 'GET',
       pathParameters: {
-        recipientID: 'id1'
+        recipientId: 'id1'
       },
       headers: {
         'x-api-key': "KLASDLKSDKLJASDLKJASLDKASLDKJKLASD"
@@ -37,10 +41,23 @@ describe('Test getByRecipientIdHandler', () => {
 
     const expectedResult = {
       statusCode: 200,
-      body: JSON.stringify(item)
+      body: JSON.stringify({
+        "recipientId": "id1",
+        lastKnownPositions: [
+          {
+            "senderId": "id2",
+            "data": "data"
+          },
+          {
+            "senderId": "id3",
+            "data": "data2"
+          }
+        ]
+      })
     };
 
     // Compare the result with the expected result 
     expect(result).toEqual(expectedResult);
   });
+
 });
