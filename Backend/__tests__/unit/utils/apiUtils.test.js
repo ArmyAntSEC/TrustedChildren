@@ -73,20 +73,6 @@ describe('Test verifyProperMethod', function () {
       expect(response.body).toEqual("Cought internal error: Specific Error");
     });
 
-    it('should respond properly on bad API Key', async () => {
-
-      process.env.HASHED_API_KEY = "BAD_KEY_12345";
-
-      const handler = function (_event) { throw new Error("Error") }
-      const event = {
-        headers: utils.getStandardHeaders()
-      };
-
-      const response = await apiUtils.handlerWrapper(event, handler);
-
-      expect(response.statusCode).toEqual(403);
-      expect(response.body).toEqual("Forbidden");
-    });
   })
 
 })

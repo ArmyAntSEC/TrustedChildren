@@ -1,4 +1,3 @@
-const verifyStandardKey = require('./apiKeyHandling.js').verifyStandardKey;
 const ErrorResponse = require('./ErrorResponse.js').ErrorResponse;
 
 exports.createDocClient = function () {
@@ -23,7 +22,6 @@ exports.verifyProperMethod = function (event, method) {
 
 exports.handlerWrapper = async function (event, handler) {
   try {
-    verifyStandardKey(event);
     const data = await handler(event);
 
     if (data === null || data === undefined) {

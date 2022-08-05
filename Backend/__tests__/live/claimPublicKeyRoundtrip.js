@@ -55,19 +55,6 @@ describe('Test public key and Uuid roundtrip', () => {
 
   });
 
-  it('should not post with wrong API key', async () => {
-    const request1 = {
-      url: baseURL,
-      method: "PUT",
-      headers: { "X-Api-Key": "Bad key" },
-      data: "Does not matter",
-      validateStatus: () => true
-    }
-    const response1 = await axios(request1)
-    expect(response1.status).toEqual(403);
-
-  })
-
 });
 
 

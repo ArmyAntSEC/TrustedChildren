@@ -81,19 +81,6 @@ describe('Test roundtrip', () => {
     expect(response4.data.lastKnownPositions[0].data).toEqual(data2);
     expect(response4.data.lastKnownPositions.length).toEqual(1);
   });
-
-  it('should not put with wrong API key', async () => {
-    const request1 = {
-      url: baseURL,
-      method: "put",
-      headers: { "X-Api-Key": "Bad key" },
-      data: "Does not matter",
-      validateStatus: () => true
-    }
-    const response1 = await axios(request1)
-    expect(response1.status).toEqual(403);
-
-  })
 });
 
 function createUniqueString(prefix) {

@@ -45,6 +45,8 @@ Resources:
           Properties:
             Path: /devices
             Method: PUT
+            Auth:
+              ApiKeyRequired: true
 
   getPublicKeyFromUuidFunction:
     Type: AWS::Serverless::Function
@@ -59,6 +61,8 @@ Resources:
           Properties:
             Path: /devices/{uuid}
             Method: GET
+            Auth:
+              ApiKeyRequired: true
 
   putLastKnownPosition:
     Type: AWS::Serverless::Function
@@ -73,6 +77,8 @@ Resources:
           Properties:
             Path: /
             Method: PUT            
+            Auth:
+              ApiKeyRequired: true
 
   getLastKnownPositionFromRecipientId:
     Type: AWS::Serverless::Function
@@ -87,7 +93,9 @@ Resources:
           Properties:
             Path: /{recipientId}
             Method: GET
-  
+            Auth:
+              ApiKeyRequired: true
+
   LastKnownPositionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
