@@ -1,112 +1,70 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const styles = StyleSheet.create({
+  mainView: {
+    top: 35,
+    paddingVertical: 50,
+    height: '100%',
+    backgroundColor: '#CCCCCC',
+  },
+  center: {
+    alignItems: 'center',
+    fontSize: '300',
+    height: 40,
+    backgroundColor: '#AAAAAA',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#005218',
+    paddingHorizontal: 32,
+    gap: 10,
+    width: 182,
+    height: 56,
+    borderRadius: 48,
+    top: 50,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#FFFFFF',
+    backgroundColor: '#AAAAAA',
+  },
+});
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+const Button = props => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <ScrollView>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.text}</Text>
+      </View>
+    </ScrollView>
+  );
+};
+
+const Greeting = props => {
+  return (
+    <View style={styles.center}>
+      <Text>Hello {props.name}!</Text>
     </View>
   );
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+const CtaButton = props => {
+  return <Button text={props.text} />;
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+const App = () => {
+  const name = 'Daniel';
+  return (
+    <View style={[styles.center, styles.mainView]}>
+      <Greeting name={name} />
+      <Greeting name="Jaina" />
+      <Greeting name="Valeera" />
+      <CtaButton text="OK" />
+    </View>
+  );
+};
 
 export default App;
